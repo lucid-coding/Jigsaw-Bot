@@ -12,7 +12,9 @@ from buttons import Delete_button
 class On_ready(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
-
+    """
+    A cog with most listeners.
+    """
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
