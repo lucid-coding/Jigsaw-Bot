@@ -49,14 +49,6 @@ class snipe(commands.Cog):
         self.message = message.content
         self.author = message.author
 
-        # if message.author.id == 218438244289740800:
-        #     self.message = "**cants snipe boot**"
-        #     self.author = message.author
-        # message_set = message.content.lower().split()
-        # if set(message_set) & set(self.blacklisted_stuff):
-        #     return
-        # self.message = message.content
-        # self.author = message.author
 
     @commands.command(aliases=["s"])
     async def snipe(self, ctx):

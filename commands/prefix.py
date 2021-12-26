@@ -31,6 +31,11 @@ class PrefixClass(commands.Cog):
 
     @commands.command()
     async def prefix(self, ctx, prefix=None) -> Coroutine:
+        """A function that sets a prefix to the Arugment
+        ---
+        Arguments -> String
+        Expects it to be a string
+        """
         view = View()
         button = Delete_button(ctx)
         view.add_item(button)
