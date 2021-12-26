@@ -56,8 +56,8 @@ class HelpView(View):
         super().__init__(timeout=timeout)
         self.ctx = ctx
 
-    async def on_error(self, error, item, interaction) -> Coroutine:
-        print("i occured in " + __file__)
+    async def on_error(self, error, _, interaction) -> Coroutine:
+        print("i occured in " , __file__)
         return await interaction.send_message(
             f"{error}{random.choice(Emojis.pepe_sad_emojis)}", ephemeral=True
         )
@@ -78,6 +78,8 @@ class HelpView(View):
     async def mod_callback(self, _, interaction) -> None:
         """
         A function that edits the help message and shows the modding commands
+        ---
+        Arguments -> interaction : discord.Interacion 
         """
         prefix = self.ctx.message.content[0]
         embed = discord.Embed(title="Mod helping command", color=Colors.gray)
@@ -125,6 +127,8 @@ class HelpView(View):
     async def info_callback(self, _, interaction) -> None:
         """
         A function that edits the help message and shows "info commands"
+        ---
+        Arguments -> interaction : discord.Interacion
         """
         prefix = self.ctx.message.content[0]
         embed = discord.Embed(title="Info commands", color=Colors.gray)
