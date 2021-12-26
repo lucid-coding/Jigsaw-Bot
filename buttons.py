@@ -2,31 +2,31 @@
 A file where buttons are stored
 """
 
-import discord
+import disnake
 from constants import Colors, Replies, Emojis, BOTNAME
-from discord.ext import commands
-from discord.ui import Button, View
+from disnake.ext import commands
+from disnake.ui import Button, View
 import random
 from typing import Coroutine, Optional
 
 
 class Delete_button(Button):
     """
-    ctx : discord.Context should be passed
+    ctx : disnake.Context should be passed
     ----
-    Some discord button that deletes the author and the bots message if everything goes smoothly
+    Some disnake button that deletes the author and the bots message if everything goes smoothly
     """
 
     def __init__(self, ctx: commands.Context) -> None:
         self.ctx = ctx
         super().__init__(
-            style=discord.ButtonStyle.danger,
+            style=disnake.ButtonStyle.danger,
             emoji=f"{random.choice(Emojis.trash_emojis)}",
         )
 
     async def callback(self, interaction) -> Coroutine:
         """
-        A discord.ui.button callback function returns a coroutine
+        A disnake.ui.button callback function returns a coroutine
         deletes the bot message and the authors message
         -----
         when the if statment fails
@@ -62,7 +62,7 @@ class HelpView(View):
             f"{error}{random.choice(Emojis.pepe_sad_emojis)}", ephemeral=True
         )
 
-    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+    async def interaction_check(self, interaction: disnake.Interaction) -> bool:
         if self.ctx.author.id != interaction.user.id:
             await interaction.response.send_message(
                 f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
@@ -72,17 +72,17 @@ class HelpView(View):
             return False
         return True
 
-    @discord.ui.button(
-        label="mod", style=discord.ButtonStyle.secondary, emoji=Emojis.mod_button
+    @disnake.ui.button(
+        label="mod", style=disnake.ButtonStyle.secondary, emoji=Emojis.mod_button
     )
     async def mod_callback(self, _, interaction) -> None:
         """
         A function that edits the help message and shows the modding commands
         ---
-        Arguments -> interaction : discord.Interacion 
+        Arguments -> interaction : disnake.Interacion 
         """
         prefix = self.ctx.message.content[0]
-        embed = discord.Embed(title="Mod helping command", color=Colors.gray)
+        embed = disnake.Embed(title="Mod helping command", color=Colors.gray)
         embed.add_field(
             name="Banning",
             value=f'{prefix}Ban "{prefix}ban <@{BOTNAME}> reason"\n{prefix}pban `deletes the user messages and ban them` "{prefix}pban <@{BOTNAME}>"\n{prefix}unban "{prefix}unban <@{BOTNAME}>"',
@@ -99,15 +99,15 @@ class HelpView(View):
         embed.set_thumbnail(url=self.ctx.guild.icon.url)
         await interaction.message.edit(embed=embed)
 
-    @discord.ui.button(
-        label="fun", style=discord.ButtonStyle.secondary, emoji=Emojis.fun_button
+    @disnake.ui.button(
+        label="fun", style=disnake.ButtonStyle.secondary, emoji=Emojis.fun_button
     )
     async def fun_callback(self, _, interaction) -> None:
         """
         A function that edits the help message and shows "Fun commands"
         """
         prefix = self.ctx.message.content[0]
-        embed = discord.Embed(title="Fun commands", color=Colors.gray)
+        embed = disnake.Embed(title="Fun commands", color=Colors.gray)
         embed.add_field(
             name=f"{prefix}Gay",
             value=f"are you not sure if your gay or not ? use {prefix}gay",
@@ -121,17 +121,17 @@ class HelpView(View):
         )
         await interaction.message.edit(embed=embed)
 
-    @discord.ui.button(
-        label="info", style=discord.ButtonStyle.secondary, emoji=Emojis.info_button
+    @disnake.ui.button(
+        label="info", style=disnake.ButtonStyle.secondary, emoji=Emojis.info_button
     )
     async def info_callback(self, _, interaction) -> None:
         """
         A function that edits the help message and shows "info commands"
         ---
-        Arguments -> interaction : discord.Interacion
+        Arguments -> interaction : disnake.Interacion
         """
         prefix = self.ctx.message.content[0]
-        embed = discord.Embed(title="Info commands", color=Colors.gray)
+        embed = disnake.Embed(title="Info commands", color=Colors.gray)
         embed.add_field(name=f"{prefix}Ping", value="shows the latency of the bot")
         embed.add_field(
             name=f"{prefix}Avatar", value=f"{prefix}Avatar 'displays an image of User'"

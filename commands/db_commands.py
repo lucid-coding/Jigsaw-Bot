@@ -1,6 +1,6 @@
 import asyncio
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 
 class AfkCommand(commands.Cog):
@@ -13,7 +13,7 @@ class AfkCommand(commands.Cog):
     async def afk(self, ctx, *, message=None):
 
         await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title="",
                 description=f"You have been set to AFK with status : {message} ",
             )
@@ -47,11 +47,11 @@ class AfkCommand(commands.Cog):
                     )
                     if user_message is None:
                         await message.channel.send(
-                            embed=discord.Embed(title="you've pinged someone whos afk")
+                            embed=disnake.Embed(title="you've pinged someone whos afk")
                         )
                     else:
                         await message.channel.send(
-                            embed=discord.Embed(
+                            embed=disnake.Embed(
                                 title="you've pinged someone whos afk",
                                 description=user_message,
                             )
@@ -67,9 +67,9 @@ class AfkCommand(commands.Cog):
     # async def show(self,ctx):
     #     x = await self.bot.db.fetch("SELECT message FROM messages WHERE ID = $1",ctx.author.id)
     #     if len(x) == 0:
-    #         return await ctx.send(embed=discord.Embed(title=f'{ctx.author.name} messages',description='No messages are available for this user'))
+    #         return await ctx.send(embed=disnake.Embed(title=f'{ctx.author.name} messages',description='No messages are available for this user'))
 
-    #     return await ctx.send(embed=discord.Embed(title=f'{ctx.author.name} messages',description='\n'.join(record["message"] for record in x)))
+    #     return await ctx.send(embed=disnake.Embed(title=f'{ctx.author.name} messages',description='\n'.join(record["message"] for record in x)))
     # @commands.command(aliases=['delete_messages'])
     # async def delete(self,ctx,*,message):
     #     x = await self.bot.db.fetch("DELETE FROM messages where id = $1 and message = $2",ctx.author.id,message)

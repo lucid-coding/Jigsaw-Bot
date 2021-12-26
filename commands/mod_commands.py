@@ -1,11 +1,11 @@
 import asyncio
 import typing
-from discord.errors import Forbidden
-from discord.ext.commands import BucketType
-from discord.ext import commands
+from disnake.errors import Forbidden
+from disnake.ext.commands import BucketType
+from disnake.ext import commands
 from typing import Coroutine
-import discord
-from discord.ui.view import View
+import disnake
+from disnake.ui.view import View
 from constants import Colors, Emojis, Replies
 import random
 from buttons import Delete_button, HelpView
@@ -31,11 +31,11 @@ class ban(commands.Cog):
             error = error.original
         if isinstance(
             error,
-            discord.Forbidden,
+            disnake.Forbidden,
         ):
 
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="the bot doesnt have enough perms",
                     color=Colors.red,
@@ -44,7 +44,7 @@ class ban(commands.Cog):
             )
 
         return await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title=f"{random.choice(Replies.error_replies)}"
                 + f"{random.choice(Emojis.pepe_sad_emojis)}",
                 description=error,
@@ -65,10 +65,10 @@ class ban(commands.Cog):
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 5, BucketType.member)
-    async def ban(self, ctx, user: discord.Member, *, reason=None):
+    async def ban(self, ctx, user: disnake.Member, *, reason=None):
         if not self.check(ctx, user):
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="cant ban yourself or anyone higher than you",
                     color=Colors.red,
@@ -76,13 +76,13 @@ class ban(commands.Cog):
             )
         if ctx.author.id == user.id:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="cant mute yourself or anyone higher than you",
                     color=Colors.red,
                 )
             )
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title=f"{user.name} got banned from {ctx.guild}",
             description=f" Reason : {reason}",
         )
@@ -92,7 +92,7 @@ class ban(commands.Cog):
         )
         try:
             await user.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title=f"you got banned from {ctx.guild}",
                     description=f"Reason : {reason} ",
                 )
@@ -109,10 +109,10 @@ class ban(commands.Cog):
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 5, BucketType.member)
     async def unban(
-        self, ctx, *, member: typing.Union[discord.Object, discord.User]
+        self, ctx, *, member: typing.Union[disnake.Object, disnake.User]
     ) -> None:
         await ctx.guild.unban(member)
-        embed = discord.Embed(title=f"{member} got unbanned")
+        embed = disnake.Embed(title=f"{member} got unbanned")
         embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.set_footer(
             text=f"executed by {ctx.author}", icon_url=ctx.author.avatar.url
@@ -122,10 +122,10 @@ class ban(commands.Cog):
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 5, BucketType.member)
     @commands.command()
-    async def pban(self, ctx, user: discord.Member, *, reason=None):
+    async def pban(self, ctx, user: disnake.Member, *, reason=None):
         if not self.check(ctx, user):
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="cant ban yourself or anyone higher than you",
                     color=Colors.red,
@@ -133,19 +133,19 @@ class ban(commands.Cog):
             )
         if user.id == ctx.author.id:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="you cant ban yourself",
                     color=Colors.red,
                 )
             )
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title=f"{user} got banned !",
             description=f"{user} have been banned for {reason}; their messages have been purged",
         )
         try:
             await user.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title=f"You got banned from {ctx.guild}",
                     description=f"Reason : {reason} ",
                 )
@@ -162,10 +162,10 @@ class ban(commands.Cog):
     @commands.has_permissions(kick_members=True)
     @commands.cooldown(1, 5, BucketType.member)
     @commands.command()
-    async def kick(self, ctx, user: discord.Member, *, reason="there was no reason."):
+    async def kick(self, ctx, user: disnake.Member, *, reason="there was no reason."):
         if not self.check(ctx, user):
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="cant kick yourself or anyone higher than you",
                     color=Colors.red,
@@ -173,7 +173,7 @@ class ban(commands.Cog):
             )
         if user.id == ctx.author.id:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="you cant kick yourself",
                     color=Colors.red,
@@ -181,12 +181,12 @@ class ban(commands.Cog):
             )
         if user is None:
             return await ctx.send(
-                discord.Embed(
+                disnake.Embed(
                     title="an error occured", description="mention a user to kick"
                 )
             )
 
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title=f"{user.name} got kicked from {ctx.guild}",
             description=f"Reason : {reason}",
         )
@@ -195,7 +195,7 @@ class ban(commands.Cog):
             text=f"executed by {ctx.author}", icon_url=ctx.author.avatar.url
         )
         try:
-            xembed = discord.Embed(
+            xembed = disnake.Embed(
                 title=f"You got kicked from {ctx.guild}",
                 description=f"Reason : {reason}\n",
             )
@@ -213,7 +213,7 @@ class ban(commands.Cog):
     @commands.command()
     async def ping(self, ctx) -> None:
         await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title="Pong!",
                 description=f"Pong! {round(self.bot.latency *1000)}ms",
                 color=Colors.green,
@@ -225,14 +225,14 @@ class ban(commands.Cog):
     async def mute(
         self,
         ctx,
-        user: discord.Member,
+        user: disnake.Member,
         time_n_unit="1h",
         *,
         reason="there was no reason",
     ):
         if not self.check(ctx, user):
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="cant mute yourself or anyone higher than you",
                     color=Colors.red,
@@ -240,7 +240,7 @@ class ban(commands.Cog):
             )
         if user.id == ctx.author.id:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="you cant mute yourself",
                     color=Colors.red,
@@ -248,7 +248,7 @@ class ban(commands.Cog):
             )
         if user is None:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="please mention someone to mute",
                     color=Colors.red,
@@ -269,7 +269,7 @@ class ban(commands.Cog):
             conv = {"h": time * 60 * 60, "m": time * 60, "s": time}
             return conv[unit]
 
-        muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
+        muted_role = disnake.utils.get(ctx.guild.roles, name="Muted")
         if muted_role is None:
             muted_role = await ctx.guild.create_role(name="Muted")
             for channel in ctx.guild.channels:
@@ -284,7 +284,7 @@ class ban(commands.Cog):
         await user.add_roles(muted_role)
         x = function_converter(time_n_unit)
         self.muted_people[user.id] = x
-        embed = discord.Embed(title=f"{user.name} has been muted", inline=False)
+        embed = disnake.Embed(title=f"{user.name} has been muted", inline=False)
         embed.add_field(
             name="\u200b", value=f"**Reason**: {reason}\n **Time**: {time_n_unit}"
         )
@@ -297,7 +297,7 @@ class ban(commands.Cog):
         await user.remove_roles(muted_role)
         self.muted_people.pop(user.id)
         await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title="unmute !", description=f"{user.name} has been unmuted !"
             )
         )
@@ -305,10 +305,10 @@ class ban(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def unmute(self, ctx, user: discord.Member):
+    async def unmute(self, ctx, user: disnake.Member):
         if not self.check(ctx, user):
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="cant ban yourself or anyone higher than you",
                     color=Colors.red,
@@ -316,17 +316,17 @@ class ban(commands.Cog):
             )
         if user.id == ctx.author.id and not ctx.guild.owner:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="oh no an error occured",
                     description="you cant unmute yourself",
                     color=Colors.red,
                 )
             )
 
-        role = discord.utils.get(user.roles, name="Muted")
+        role = disnake.utils.get(user.roles, name="Muted")
         if role:
             await user.remove_roles(role)
-            embed = discord.Embed(title=f"{user} got unmuted")
+            embed = disnake.Embed(title=f"{user} got unmuted")
             embed.set_thumbnail(url=ctx.guild.icon.url)
             embed.set_footer(
                 text=f"executed by {ctx.author}", icon_url=ctx.author.avatar.url
@@ -338,7 +338,7 @@ class ban(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member) -> None:
         if member.id in self.muted_people:
-            muted_role = discord.utils.get(member.guild.roles, name="Muted")
+            muted_role = disnake.utils.get(member.guild.roles, name="Muted")
             await member.add_roles(muted_role)
             try:
                 await asyncio.sleep(self.muted_people[member.id])
@@ -347,9 +347,9 @@ class ban(commands.Cog):
             await member.remove_roles(muted_role)
 
     @commands.command(aliases=["ava", "av"])
-    async def avatar(self, ctx, member: discord.Member = None):
+    async def avatar(self, ctx, member: disnake.Member = None):
         member = member or ctx.author
-        embed = discord.Embed(title=f"", description="", color=ctx.author.color)
+        embed = disnake.Embed(title=f"", description="", color=ctx.author.color)
         embed.set_footer(
             text=f"{member} profile picture ", icon_url=f"{ctx.guild.icon.url}"
         )
@@ -363,7 +363,7 @@ class ban(commands.Cog):
         button = Delete_button(ctx)
         view.add_item(button)
         await ctx.send(
-            embed=discord.Embed(title="Help commands", color=Colors.gray), view=view
+            embed=disnake.Embed(title="Help commands", color=Colors.gray), view=view
         )
 
 

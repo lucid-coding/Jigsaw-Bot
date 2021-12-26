@@ -1,6 +1,6 @@
-import discord
-from discord.ext import commands
-from discord.ui import Button, View
+import disnake
+from disnake.ext import commands
+from disnake.ui import Button, View
 from buttons import Delete_button
 from constants import Replies, Emojis
 import random
@@ -9,7 +9,7 @@ import random
 class Mybutton(Button):
     def __init__(self, ctx, label):
         self.ctx = ctx
-        super().__init__(label=label, style=discord.ButtonStyle.green, emoji="👍")
+        super().__init__(label=label, style=disnake.ButtonStyle.green, emoji="👍")
 
     async def callback(self, interaction) -> None:
 
