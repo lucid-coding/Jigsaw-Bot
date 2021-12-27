@@ -1,10 +1,10 @@
 import re
 import random
 from typing import Coroutine
-from discord.ext import commands
-import discord
-from discord.message import Message
-from discord.ui import View
+from disnake.ext import commands
+import disnake
+from disnake.message import Message
+from disnake.ui import View
 from constants import Colors, Replies, Emojis
 from buttons import Delete_button
 
@@ -18,7 +18,7 @@ class On_ready(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
-            embed = discord.Embed(
+            embed = disnake.Embed(
                 title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
                 description=f"`{ctx.message.content}` command was not found",
                 color=Colors.red,
@@ -38,7 +38,7 @@ class On_ready(commands.Cog):
 
     async def cog_command_error(self, ctx, error):
         return await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
                 description=error,
                 color=Colors.red,
@@ -48,7 +48,7 @@ class On_ready(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member) -> Message:
         channel = self.bot.get_channel(913653805122453551)
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title="   ",
             description="[self](https://discord.com/channels/913653805122453545/913856880265285702/913894248653406348) <:peperules:914189058719219754> [blessed](https://discord.com/channels/913653805122453545/914165430560636999/914168257202761748)",
             color=0x36393F,
@@ -61,7 +61,7 @@ class On_ready(commands.Cog):
     @commands.command()
     async def welcome_test(self, ctx):
         channel = self.bot.get_channel(913653805122453551)
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title="   ",
             description="[self](https://discord.com/channels/913653805122453545/913856880265285702/913894248653406348) <:peperules:914189058719219754> [blessed](https://discord.com/channels/913653805122453545/914165430560636999/914168257202761748)",
             color=0x36393F,
@@ -72,7 +72,7 @@ class On_ready(commands.Cog):
         await channel.send(f"{ctx.author.mention}", embed=embed)
 
     @commands.Cog.listener()
-    async def on_message(self, message: discord.Message) -> Coroutine:
+    async def on_message(self, message: disnake.Message) -> Coroutine:
         if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content):
             x = await self.bot.db2.fetch(
                 "SELECT prefix from prefix_table where id = $1", message.guild.id

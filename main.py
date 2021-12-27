@@ -1,9 +1,13 @@
 import asyncpg
 import os
-from discord.ext import commands
-import discord
-from config import DNS2, TOKEN,DNS1
+from disnake.ext import commands
+import disnake
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv()) # can be useless
+TOKEN = os.getenv('DISCORD_TOKEN')
+DNS1 = os.getenv('DNS1')
+DNS2 = os.getenv('DNS"')
 
 async def create_db_pool2():
     bot.db2 = await asyncpg.create_pool(
@@ -15,8 +19,8 @@ async def get_pre(bot, message) -> str:
     """
     A corotinue where it gets the message and returns a string
         ---
-    Arguments -> bot : discord.Object
-    message - > discord.Contenxt
+    Arguments -> bot : disnake.Object
+    message - > disnake.Contenxt
     """
     prefix = await bot.db2.fetch(
         "SELECT prefix from prefix_table WHERE id = $1", message.guild.id
@@ -26,15 +30,15 @@ async def get_pre(bot, message) -> str:
     return "$"
 
 
-intents = discord.Intents.all()
+intents = disnake.Intents.all()
 bot = commands.Bot(command_prefix=get_pre, case_insensitive=True, intents=intents)
 bot.remove_command("help")
 
 
 @bot.event
 async def on_ready():
-    activity = discord.Game(name="$help")
-    await bot.change_presence(status=discord.Status.idle, activity=activity)
+    activity = disnake.Game(name="$help")
+    await bot.change_presence(status=disnake.Status.idle, activity=activity)
 
 
 async def create_db_pool():
@@ -57,9 +61,9 @@ async def create_db_pool3():
     )
 
 
-bot.loop.run_until_complete(create_db_pool())
-bot.loop.run_until_complete(create_db_pool2())
-bot.loop.run_until_complete(create_db_pool3())
+#bot.loop.run_until_complete(create_db_pool())
+#bot.loop.run_until_complete(create_db_pool2())
+#bot.loop.run_until_complete(create_db_pool3())
 for filename in os.listdir("./commands"):
     if filename.endswith(".py"):
         bot.load_extension(f"commands.{filename[:-3]}")

@@ -4,9 +4,9 @@ A file for Snipe related commands.
 # pylint: disable=import-error
 from typing import Coroutine, Optional
 import random
-from discord.ext import tasks
-import discord
-from discord.ext import commands
+from disnake.ext import tasks
+import disnake
+from disnake.ext import commands
 from constants import Emojis, Replies, Colors
 
 
@@ -25,7 +25,7 @@ class snipe(commands.Cog):
 
     async def cog_command_error(self, ctx, error):
         await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title=f"{random.choice(Replies.error_replies)}"
                 + f"{random.choice(Emojis.pepe_sad_emojis)}",
                 description=error,
@@ -54,8 +54,8 @@ class snipe(commands.Cog):
     async def snipe(self, ctx):
         if self.message is None:
             return await ctx.send("there are no deleted messages")
-        embed = discord.Embed()
-        embed = discord.Embed(title="   ", description=f"{self.message}")
+        embed = disnake.Embed()
+        embed = disnake.Embed(title="   ", description=f"{self.message}")
         embed.set_author(name=self.author.name, icon_url=self.author.avatar.url)
         embed.set_thumbnail(url=self.author.avatar.url)
         embed.set_footer(
@@ -83,7 +83,7 @@ class snipe(commands.Cog):
                 "INSERT INTO blacklist VALUES ($1,$2)", ctx.guild.id, string_of_data
             )
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="success",
                     description=f"added `{stuff}` to the database. ",
                     color=Colors.green,
@@ -96,7 +96,7 @@ class snipe(commands.Cog):
             if stuff in i:
 
                 return await ctx.send(
-                    embed=discord.Embed(
+                    embed=disnake.Embed(
                         title="Failed",
                         description=f"{stuff} is already stored in the database",
                         color=Colors.red,
@@ -110,7 +110,7 @@ class snipe(commands.Cog):
         )
 
         return await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title="success",
                 description=f"added `{stuff}` to the database. ",
                 color=Colors.green,
@@ -124,7 +124,7 @@ class snipe(commands.Cog):
             "SELECT * FROM blacklist where guild_id = $1", ctx.guild.id
         )
         return await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title=f"blacklisted words for {ctx.guild.name}",
                 description="".join(words["text"] for words in x),
             )
@@ -145,7 +145,7 @@ class snipe(commands.Cog):
         print(data)
         if word not in data:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="Fail",
                     description=f"couldnt find `{word}` in the database. ",
                     color=Colors.red,
@@ -162,7 +162,7 @@ class snipe(commands.Cog):
         )
         if hm == "UPDATE 1":
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title="success",
                     description=f"removed `{word}` from the database. ",
                     color=Colors.green,
@@ -192,7 +192,7 @@ class snipe(commands.Cog):
         if statment:
             await message.delete()
             text = ", ".join(statment)
-            embed = discord.Embed(
+            embed = disnake.Embed(
                 title=f"you've sent a blacklisted word in {message.guild.name}",
                 description=f"Word : {text}",
             )

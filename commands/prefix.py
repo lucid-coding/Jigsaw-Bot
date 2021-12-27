@@ -1,11 +1,11 @@
 from typing import Coroutine
-from discord.components import Button
-from discord.ext import commands
-from discord.ui.view import View
+from disnake.components import Button
+from disnake.ext import commands
+from disnake.ui.view import View
 from buttons import Delete_button
 from constants import Replies, Emojis, Colors
 import random
-import discord
+import disnake
 
 
 class PrefixClass(commands.Cog):
@@ -21,7 +21,7 @@ class PrefixClass(commands.Cog):
 
     async def cog_command_error(self, ctx, error) -> None:
         await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title=f"{random.choice(Replies.error_replies)}"
                 + f"{random.choice(Emojis.pepe_sad_emojis)}",
                 description=error,
@@ -41,7 +41,7 @@ class PrefixClass(commands.Cog):
         view.add_item(button)
         if not prefix:
             return await ctx.send(
-                embed=discord.Embed(
+                embed=disnake.Embed(
                     title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
                     description="please provide a prefix **this command is used to change the bot prefix**",
                     color=Colors.red,
@@ -63,7 +63,7 @@ class PrefixClass(commands.Cog):
                 ctx.guild.id,
             )
         await ctx.send(
-            embed=discord.Embed(
+            embed=disnake.Embed(
                 title="success",
                 description=f"{prefix} has been stored",
                 color=Colors.green,
