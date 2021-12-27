@@ -342,8 +342,8 @@ class ban(commands.Cog):
             await member.add_roles(muted_role)
             try:
                 await asyncio.sleep(self.muted_people[member.id])
-            except KeyError:
-                print("error")
+            except Exception as E:
+                raise E
             await member.remove_roles(muted_role)
 
     @commands.command(aliases=["ava", "av"])
@@ -353,8 +353,11 @@ class ban(commands.Cog):
         embed.set_footer(
             text=f"{member} profile picture ", icon_url=f"{ctx.guild.icon.url}"
         )
+        view = View()
+        button = Delete_button(ctx,discord.ButtonStyle.gray)
+        view.add_item(button)
         embed.set_image(url=member.avatar.url)
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed,view=view)
 
     @commands.command()
     @commands.cooldown(1, 30, BucketType.member)

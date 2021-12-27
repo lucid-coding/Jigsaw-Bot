@@ -7,20 +7,24 @@ from constants import Colors, Replies, Emojis, BOTNAME
 from discord.ext import commands
 from discord.ui import Button, View
 import random
-from typing import Coroutine, Optional
-
+from typing import Coroutine, Optional,Literal 
 
 class Delete_button(Button):
     """
-    ctx : discord.Context should be passed
-    ----
     Some discord button that deletes the author and the bots message if everything goes smoothly
+    Arguments
+    
+    ctx : discord.Context should be passed
+    class discord.ButtonStyle
+    or discord.ButtonStyle.danger, discord.ButtonStyle.gray
+    ----
     """
 
-    def __init__(self, ctx: commands.Context) -> None:
+    def __init__(self, ctx: commands.Context,style : Literal[discord.ButtonStyle.danger, discord.ButtonStyle.gray] = None ) -> None:
         self.ctx = ctx
+        self._style = style 
         super().__init__(
-            style=discord.ButtonStyle.danger,
+            style= self._style or discord.ButtonStyle.danger ,
             emoji=f"{random.choice(Emojis.trash_emojis)}",
         )
 
@@ -124,7 +128,7 @@ class HelpView(View):
     @discord.ui.button(
         label="info", style=discord.ButtonStyle.secondary, emoji=Emojis.info_button
     )
-    async def info_callback(self, _, interaction) -> None:
+    async def info_callback(self, item, interaction) -> None:
         """
         A function that edits the help message and shows "info commands"
         ---

@@ -58,18 +58,18 @@ class On_ready(commands.Cog):
         embed.set_footer(text=member.guild.member_count, icon_url=member.guild.icon.url)
         await channel.send(f"{member.mention}", embed=embed)
 
-    @commands.command()
-    async def welcome_test(self, ctx):
-        channel = self.bot.get_channel(913653805122453551)
-        embed = discord.Embed(
-            title="   ",
-            description="[self](https://discord.com/channels/913653805122453545/913856880265285702/913894248653406348) <:peperules:914189058719219754> [blessed](https://discord.com/channels/913653805122453545/914165430560636999/914168257202761748)",
-            color=0x36393F,
-        )
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
-        embed.set_thumbnail(url=ctx.author.avatar.url)
-        embed.set_footer(text=ctx.guild.member_count, icon_url=ctx.guild.icon.url)
-        await channel.send(f"{ctx.author.mention}", embed=embed)
+    # @commands.command()
+    # async def welcome_test(self, ctx):
+    #     channel = self.bot.get_channel(913653805122453551)
+    #     embed = discord.Embed(
+    #         title="   ",
+    #         description="[self](https://discord.com/channels/913653805122453545/913856880265285702/913894248653406348) <:peperules:914189058719219754> [blessed](https://discord.com/channels/913653805122453545/914165430560636999/914168257202761748)",
+    #         color=0x36393F,
+    #     )
+    #     embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
+    #     embed.set_thumbnail(url=ctx.author.avatar.url)
+    #     embed.set_footer(text=ctx.guild.member_count, icon_url=ctx.guild.icon.url)
+    #     await channel.send(f"{ctx.author.mention}", embed=embed)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> Coroutine:
