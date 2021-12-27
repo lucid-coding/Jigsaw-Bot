@@ -7,24 +7,29 @@ from constants import Colors, Replies, Emojis, BOTNAME
 from discord.ext import commands
 from discord.ui import Button, View
 import random
-from typing import Coroutine, Optional,Literal 
+from typing import Coroutine, Optional, Literal
+
 
 class Delete_button(Button):
     """
     Some discord button that deletes the author and the bots message if everything goes smoothly
     Arguments
-    
+
     ctx : discord.Context should be passed
     class discord.ButtonStyle
     or discord.ButtonStyle.danger, discord.ButtonStyle.gray
     ----
     """
 
-    def __init__(self, ctx: commands.Context,style : Literal[discord.ButtonStyle.danger, discord.ButtonStyle.gray] = None ) -> None:
+    def __init__(
+        self,
+        ctx: commands.Context,
+        style: Literal[discord.ButtonStyle.danger, discord.ButtonStyle.gray] = None,
+    ) -> None:
         self.ctx = ctx
-        self._style = style 
+        self._style = style
         super().__init__(
-            style= self._style or discord.ButtonStyle.danger ,
+            style=self._style or discord.ButtonStyle.danger,
             emoji=f"{random.choice(Emojis.trash_emojis)}",
         )
 
@@ -61,7 +66,7 @@ class HelpView(View):
         self.ctx = ctx
 
     async def on_error(self, error, _, interaction) -> Coroutine:
-        print("i occured in " , __file__)
+        print("i occured in ", __file__)
         return await interaction.send_message(
             f"{error}{random.choice(Emojis.pepe_sad_emojis)}", ephemeral=True
         )
@@ -83,7 +88,7 @@ class HelpView(View):
         """
         A function that edits the help message and shows the modding commands
         ---
-        Arguments -> interaction : discord.Interacion 
+        Arguments -> interaction : discord.Interacion
         """
         prefix = self.ctx.message.content[0]
         embed = discord.Embed(title="Mod helping command", color=Colors.gray)

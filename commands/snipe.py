@@ -16,6 +16,7 @@ class snipe(commands.Cog):
     ---
     Inherting from commands.Cog which allows this to be a cog class
     """
+
     def __init__(self, bot, message=None, author=None, blacklisted_stuff=None):
         self.bot = bot
         self.message = message
@@ -48,7 +49,6 @@ class snipe(commands.Cog):
             return
         self.message = message.content
         self.author = message.author
-
 
     @commands.command(aliases=["s"])
     async def snipe(self, ctx):

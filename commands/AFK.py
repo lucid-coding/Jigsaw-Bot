@@ -30,7 +30,12 @@ class AfkCommand(commands.Cog):
         if message.author.id in self.dct.keys():
 
             self.dct.pop(message.author.id)
-            if self.pings[message.author.id] == 1:
+            if self.pings[message.author.id] == 0:
+                return await message.channel.send(
+                    f"welcome back {message.author.mention} you've been pinged {self.pings[message.author.id]} time"
+                )
+
+            elif self.pings[message.author.id] == 1:
 
                 return await message.channel.send(
                     f"welcome back {message.author.mention} you've been pinged {self.pings[message.author.id]} time"

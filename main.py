@@ -2,13 +2,11 @@ import asyncpg
 import os
 from discord.ext import commands
 import discord
-from config import DNS, DNS2, TOKEN,DNS1
+from config import DNS, DNS2, TOKEN, DNS1
 
 
 async def create_db_pool2():
-    bot.db2 = await asyncpg.create_pool(
-        dsn=DNS1
-    )
+    bot.db2 = await asyncpg.create_pool(dsn=DNS1)
 
 
 async def get_pre(bot, message) -> str:
@@ -42,9 +40,7 @@ async def create_db_pool():
     ---
     Arguments -> None
     """
-    bot.db = await asyncpg.create_pool(
-        dsn=DNS
-    )
+    bot.db = await asyncpg.create_pool(dsn=DNS)
 
 
 async def create_db_pool3():
@@ -52,9 +48,7 @@ async def create_db_pool3():
     ---
     Arguments -> None
     """
-    bot.blacklist_db = await asyncpg.create_pool(
-        dsn=DNS2
-    )
+    bot.blacklist_db = await asyncpg.create_pool(dsn=DNS2)
 
 
 bot.loop.run_until_complete(create_db_pool())

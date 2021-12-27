@@ -354,10 +354,10 @@ class ban(commands.Cog):
             text=f"{member} profile picture ", icon_url=f"{ctx.guild.icon.url}"
         )
         view = View()
-        button = Delete_button(ctx,discord.ButtonStyle.gray)
+        button = Delete_button(ctx, discord.ButtonStyle.gray)
         view.add_item(button)
         embed.set_image(url=member.avatar.url)
-        await ctx.send(embed=embed,view=view)
+        await ctx.send(embed=embed, view=view)
 
     @commands.command()
     @commands.cooldown(1, 30, BucketType.member)
