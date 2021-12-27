@@ -61,9 +61,9 @@ async def create_db_pool3():
     )
 
 
-bot.loop.run_until_complete(create_db_pool())
-bot.loop.run_until_complete(create_db_pool2())
-bot.loop.run_until_complete(create_db_pool3())
+#bot.loop.run_until_complete(create_db_pool())
+#bot.loop.run_until_complete(create_db_pool2())
+#bot.loop.run_until_complete(create_db_pool3())
 for filename in os.listdir("./commands"):
     if filename.endswith(".py"):
         bot.load_extension(f"commands.{filename[:-3]}")
