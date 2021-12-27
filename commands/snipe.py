@@ -186,7 +186,8 @@ class snipe(commands.Cog):
         content = "".join(content).split()
         try:
             blacklisted_text = self.blacklisted_stuff[message.guild.id]
-        except AttributeError:
+        except Exception as E:
+            print(E)
             return None
         statment = set(blacklisted_text.split()) & set(content)
         if statment:
