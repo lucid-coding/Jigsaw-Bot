@@ -43,7 +43,7 @@ async def create_db_pool():
     Arguments -> None
     """
     bot.db = await asyncpg.create_pool(
-        dsn="postgresql://postgres:xLzrH6DJUENGSpW0n8AE@containers-us-west-19.railway.app:6603/railway"
+        dsn=dns2
     )
 
 
