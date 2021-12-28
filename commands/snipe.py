@@ -17,10 +17,12 @@ class snipe(commands.Cog):
     Inherting from commands.Cog which allows this to be a cog class
     """
 
-    def __init__(self, bot, message=None, author=None, blacklisted_stuff=None):
+    def __init__(self, bot, message=None, author=None, blacklisted_stuff=None,edited_author=None,edited_message=None):
         self.bot = bot
         self.message = message
         self.author = author
+        self.edited_author = edited_author
+        self.edited_message = edited_message
         self.blacklisted_stuff = blacklisted_stuff
         self.my_loop.start()
 
@@ -206,6 +208,61 @@ class snipe(commands.Cog):
             )
             return await message.author.send(embed=embed)
 
+    @commands.Cog.listener()
+    async def on_message_edit(self, before,message) -> Optional[Coroutine]:
+        if message.author.bot:
+            return
+        content = [i for i in message.content if i.isalpha() or i == " "]
+        content = "".join(content).split()
+        try:
+            blacklisted_text = self.blacklisted_stuff[message.guild.id]
+        except Exception as E:
+            print(E)
+            return None
+        statment = set(blacklisted_text.split()) & set(content)
+        if statment:
+            await message.delete()
+            text = ", ".join(statment)
+            embed = discord.Embed(
+                title=f"you've sent a blacklisted word in {message.guild.name}",
+                description=f"Word : {text}",
+            )
+            embed.set_author(
+                name=message.author.name, icon_url=message.author.avatar.url
+            )
+            embed.set_thumbnail(url=message.author.avatar.url)
+            embed.set_footer(
+                text=message.guild.member_count, icon_url=message.guild.icon.url
+            )
+            return await message.author.send(embed=embed)
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        if message.author.bot:
+            return
+        content = [i for i in message.content if i.isalpha() or i == " "]
+        content = "".join(content).split()
+        try:
+            blacklisted_text = self.blacklisted_stuff[message.guild.id]
+        except KeyError:
+            return None
+        statment = set(blacklisted_text.split()) & set(content)
+        if statment:
+            return
+        self.edited_message = message.content
+        self.edited_author = message.author
+
+    @commands.command(aliases=["es"])
+    async def editsnipe(self, ctx):
+        if self.edited_message is None:
+            return await ctx.send("there are no edited messages")
+        embed = discord.Embed()
+        embed = discord.Embed(title="   ", description=f"{self.edited_message}")
+        embed.set_author(name=self.edited_author.name, icon_url=self.edited_author.avatar.url)
+        embed.set_thumbnail(url=self.edited_author.avatar.url)
+        embed.set_footer(
+            text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url
+        )
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(snipe(bot))
