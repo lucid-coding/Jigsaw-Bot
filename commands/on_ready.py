@@ -86,7 +86,7 @@ class On_ready(commands.Cog):
             x = (i["prefix"] for i in x)
             if x:
 
-                return await message.channel.send(f"My prefix is `{x.__next__()}`!")
+                return await message.channel.send(f"My prefix is `{x.__next__()}`")
             return await message.channel.send("My prefix is $")
 
 
