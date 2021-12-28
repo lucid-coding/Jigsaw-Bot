@@ -4,9 +4,23 @@ from discord.ext import commands
 import discord
 from config import DNS, DNS2, TOKEN, DNS1
 
-
-async def create_db_pool2():
-    bot.db2 = await asyncpg.create_pool(dsn=DNS1)
+intents = discord.Intents(
+    guild_reactions=True,  # reaction add/remove/clear
+    guild_messages=True,  # message create/update/delete
+    guilds=True,  # guild/channel join/remove/update
+    integrations=True,  # integrations update
+    voice_states=True,  # voice state update
+    dm_reactions=True,  # reaction add/remove/clear
+    guild_typing=True,  # on typing
+    dm_messages=True,  # message create/update/delete
+    presences=True,  # member/user update for games/activities
+    dm_typing=True,  # on typing
+    webhooks=True,  # webhook update
+    members=True,  # member join/remove/update
+    invites=True,  # invite create/delete
+    emojis=True,  # emoji update
+    bans=True,  # member ban/unban
+)
 
 
 async def get_pre(bot, message) -> str:
@@ -24,8 +38,13 @@ async def get_pre(bot, message) -> str:
     return "$"
 
 
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix=get_pre, case_insensitive=True, intents=intents)
+bot = commands.Bot(
+    command_prefix=get_pre,
+    case_insensitive=True,
+    intents=intents,
+    slash_commands=True,
+    slash_command_guilds=[833120463135834162, 758035468322471958],
+)
 bot.remove_command("help")
 
 
@@ -35,28 +54,21 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=activity)
 
 
-async def create_db_pool():
-    """creates a database pool""
-    ---
-    Arguments -> None
-    """
-    bot.db = await asyncpg.create_pool(dsn=DNS)
-
-
-async def create_db_pool3():
+async def create_pool():
     """a database for blacklist and stuff related to it
     ---
     Arguments -> None
     """
     bot.blacklist_db = await asyncpg.create_pool(dsn=DNS2)
+    bot.db = await asyncpg.create_pool(dsn=DNS)
+    bot.db2 = await asyncpg.create_pool(dsn=DNS1)
 
 
-bot.loop.run_until_complete(create_db_pool())
-bot.loop.run_until_complete(create_db_pool2())
-bot.loop.run_until_complete(create_db_pool3())
+bot.loop.run_until_complete(create_pool())
 for filename in os.listdir("./commands"):
     if filename.endswith(".py"):
         bot.load_extension(f"commands.{filename[:-3]}")
 
 bot.load_extension("jishaku")
+bot.get_command("jsk").hidden = True
 bot.run(TOKEN)

@@ -13,7 +13,7 @@ class PrefixClass(commands.Cog):
     A Cog that handles most things about prefixes
     ---
     and where the prefix is delcared in main file
-    bot.db2 is delcared in the pool , line 11
+    bot.db2 is delcared in the pool
     """
 
     def __init__(self, bot):

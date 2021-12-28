@@ -43,12 +43,15 @@ class Delete_button(Button):
         ephemeral=True so only the user can sees it'
         """
         if interaction.user.id == self.ctx.author.id:
-            # checking if the author id meets the user interaction id
-            await self.ctx.message.delete()
-            # deleting the author message
+            try:
+                await self.ctx.message.delete()
+                # trying to delete the message, this would work if the message isnt a slash-command
+            except discord.errors.NotFound:
+                # this is basically checking if the message was used by a slash-command so it's not needed to delete it , otherwise it would create a error.
+                pass
             return await interaction.message.delete()
             # and finally deleting the interaction message which is the bots message
-        return await interaction.send_message(
+        return await interaction.response.send_message(
             f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
             ephemeral=True,
         )
@@ -66,9 +69,8 @@ class HelpView(View):
         self.ctx = ctx
 
     async def on_error(self, error, _, interaction) -> Coroutine:
-        print("i occured in ", __file__)
-        return await interaction.send_message(
-            f"{error}{random.choice(Emojis.pepe_sad_emojis)}", ephemeral=True
+        return await interaction.response.send_message(
+            f" {error} {random.choice(Emojis.pepe_sad_emojis)}", ephemeral=True
         )
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:

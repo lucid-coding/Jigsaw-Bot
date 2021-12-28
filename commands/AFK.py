@@ -1,6 +1,9 @@
 import asyncio
+import random
 import discord
 from discord.ext import commands
+
+from constants import Emojis, Replies
 
 
 class AfkCommand(commands.Cog):
@@ -11,6 +14,14 @@ class AfkCommand(commands.Cog):
 
     @commands.command()
     async def afk(self, ctx, *, message=None):
+        if ctx.author.id in self.dct:
+
+            return await ctx.send(
+                embed=discord.Embed(
+                    title="",
+                    description=f"You are already AFK with status : {self.dct[ctx.author.id]} ",
+                )
+            )
 
         await ctx.send(
             embed=discord.Embed(
@@ -32,7 +43,10 @@ class AfkCommand(commands.Cog):
             self.dct.pop(message.author.id)
             if self.pings[message.author.id] == 0:
                 return await message.channel.send(
-                    f"welcome back {message.author.mention} you've been pinged {self.pings[message.author.id]} time"
+                    embed=discord.Embed(
+                        title=f"{random.choice(Replies.welcome_back_replies)}",
+                        description=f"welcome back  {message.author.mention} {Emojis.ZeroTwoHug}",
+                    )
                 )
 
             elif self.pings[message.author.id] == 1:

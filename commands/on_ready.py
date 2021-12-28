@@ -15,6 +15,10 @@ class On_ready(commands.Cog):
 
     """
     A cog with most listeners.
+    ---
+    No arugments are passed
+    self.bot = bot 
+    where bot is an object of discord.commands.bot
     """
 
     @commands.Cog.listener()

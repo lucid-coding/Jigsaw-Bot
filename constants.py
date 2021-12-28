@@ -14,6 +14,7 @@ class Emojis:
     Methods -> None
     """
 
+    ZeroTwoHug = "<:02hug:838664910128021514>"
     pensive = "😔"
     pepe_sad_emojis = [
         "<a:CH_PepeSadCry:918905686178553867>",
@@ -56,6 +57,13 @@ class Replies:
     Methods -> None
     """
 
+    welcome_back_replies = [
+        "great to see you again",
+        "hey you've gone for some time. we've missed you",
+        "some time has passed.",
+        "oh look, its you again ",
+        "No matter how far we may wander from the Lord’s perfect will for our lives, we are always welcome back!",
+    ]
     positive_replies = [
         "Yep.",
         "Absolutely!",

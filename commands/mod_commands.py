@@ -56,6 +56,8 @@ class ban(commands.Cog):
     def check(self, ctx, user):
         if ctx.author is ctx.guild.owner:
             return True
+        if not user.roles:
+            return False
         if ctx.author.id == user.id:
             return True
         if ctx.author.top_role > user.top_role:
@@ -284,7 +286,7 @@ class ban(commands.Cog):
         await user.add_roles(muted_role)
         x = function_converter(time_n_unit)
         self.muted_people[user.id] = x
-        embed = discord.Embed(title=f"{user.name} has been muted", inline=False)
+        embed = discord.Embed(title=f"{user.name} has been muted")
         embed.add_field(
             name="\u200b", value=f"**Reason**: {reason}\n **Time**: {time_n_unit}"
         )
@@ -306,11 +308,21 @@ class ban(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, user: discord.Member):
+
+        muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
+        if not muted_role:
+            return await ctx.send(
+                embed=discord.Embed(
+                    title="Role Error",
+                    description="you dont seem to have the Muted role , it would autocreate when trying to mute anyone ",
+                    color=Colors.red,
+                )
+            )
         if not self.check(ctx, user):
             return await ctx.send(
                 embed=discord.Embed(
                     title="oh no an error occured",
-                    description="cant ban yourself or anyone higher than you",
+                    description="cant mute yourself or anyone higher than you",
                     color=Colors.red,
                 )
             )
@@ -333,7 +345,11 @@ class ban(commands.Cog):
             )
             self.muted_people.pop(user.id)
             return await ctx.send(embed=embed)
-        await ctx.send("that user isn't muted huh ?")
+        await ctx.send(
+            embed=discord.Embed(
+                title="that following user isn't muted ", color=Colors.red
+            )
+        )
 
     @commands.Cog.listener()
     async def on_member_join(self, member) -> None:
@@ -360,7 +376,7 @@ class ban(commands.Cog):
         await ctx.send(embed=embed, view=view)
 
     @commands.command()
-    @commands.cooldown(1, 30, BucketType.member)
+    @commands.cooldown(1, 15, BucketType.member)
     async def help(self, ctx):
         view = HelpView(ctx)
         button = Delete_button(ctx)
