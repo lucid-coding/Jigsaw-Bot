@@ -17,7 +17,15 @@ class snipe(commands.Cog):
     Inherting from commands.Cog which allows this to be a cog class
     """
 
-    def __init__(self, bot, message=None, author=None, blacklisted_stuff=None,edited_author=None,edited_message=None):
+    def __init__(
+        self,
+        bot,
+        message=None,
+        author=None,
+        blacklisted_stuff=None,
+        edited_author=None,
+        edited_message=None,
+    ):
         self.bot = bot
         self.message = message
         self.author = author
@@ -209,7 +217,7 @@ class snipe(commands.Cog):
             return await message.author.send(embed=embed)
 
     @commands.Cog.listener()
-    async def on_message_edit(self, before,message) -> Optional[Coroutine]:
+    async def on_message_edit(self, before, message) -> Optional[Coroutine]:
         if message.author.bot:
             return
         content = [i for i in message.content if i.isalpha() or i == " "]
@@ -235,6 +243,7 @@ class snipe(commands.Cog):
                 text=message.guild.member_count, icon_url=message.guild.icon.url
             )
             return await message.author.send(embed=embed)
+
     @commands.Cog.listener()
     async def on_message_delete(self, message):
         if message.author.bot:
@@ -257,12 +266,15 @@ class snipe(commands.Cog):
             return await ctx.send("there are no edited messages")
         embed = discord.Embed()
         embed = discord.Embed(title="   ", description=f"{self.edited_message}")
-        embed.set_author(name=self.edited_author.name, icon_url=self.edited_author.avatar.url)
+        embed.set_author(
+            name=self.edited_author.name, icon_url=self.edited_author.avatar.url
+        )
         embed.set_thumbnail(url=self.edited_author.avatar.url)
         embed.set_footer(
             text=f"requested by {ctx.author.name}", icon_url=ctx.author.avatar.url
         )
         await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(snipe(bot))
