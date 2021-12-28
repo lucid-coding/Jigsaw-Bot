@@ -1,15 +1,16 @@
 import asyncio
 import typing
+from discord.emoji import Emoji
 from discord.errors import Forbidden
 from discord.ext.commands import BucketType
 from discord.ext import commands
-from typing import Coroutine
+from typing import Coroutine, Optional
 import discord
 from discord.ui.view import View
 from constants import Colors, Emojis, Replies
 import random
 from buttons import Delete_button, HelpView
-
+import datetime
 
 class ban(commands.Cog):
     """
@@ -21,6 +22,26 @@ class ban(commands.Cog):
         self.bot = bot
         self.last_user = last_user
         self.muted_people = {} if muted_people is None else muted_people
+
+    def converter(self,time_unit):
+        
+        """
+        A time_unit coverter
+        return time * unit as an exmaple
+        1h is time * 60 * 60
+        first ons is converting it to minutes then hours
+        ---
+        Arguments would looks something like
+        int string thats one letter long. either h , s , d ,  
+        
+        """
+        time = time_unit[:-1]
+        unit = time_unit[-1]
+       
+        conv = {"h": time * 60 * 60, "m": time * 60, "s": time}
+        unit = unit.lower()
+        return conv[unit]
+        
 
     async def cog_command_error(self, ctx, error) -> Coroutine:
 
@@ -303,7 +324,6 @@ class ban(commands.Cog):
                 title="unmute !", description=f"{user.name} has been unmuted !"
             )
         )
-        # await ctx.send(f'{function_converter(time_n_unit)} {reason=} {user.name=}')
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -386,5 +406,56 @@ class ban(commands.Cog):
         )
 
 
+    @commands.command()
+    @commands.has_permissions(moderate_members=True)
+    async def timeout(self,ctx,user : discord.Member, time : int = 1,unit : str = "hours",* ,reason=None) -> None :
+        """
+        A timeout command 
+        ---
+        Arguements
+        takes in a user : discord.Member
+        time :s tr -> Optional
+        unit : int -> Optional
+        *reason :str -> Optional
+        """
+        reason = reason or "Nothing"
+        if not self.check(ctx, user):
+            return await ctx.send(
+                embed=discord.Embed(
+                    title="oh no an error occured",
+                    description="cant timeout yourself or anyone higher than you",
+                    color=Colors.red,
+                )
+            )
+        if user.id == ctx.author.id:
+            return await ctx.send(
+                embed=discord.Embed(
+                    title="oh no an error occured",
+                    description="you cant timeout yourself",
+                    color=Colors.red,
+                )
+            )
+        if unit.lower() in ["hour","hours","h"]:
+            time_object =  datetime.timedelta(hours=time)
+        elif unit.lower() in ["min","minutes","minute"]:
+            time_object = datetime.timedelta(minutes=time)
+        elif unit.lower() in ["Day", "Days"]:
+            time_object = datetime.timedelta(days=time)
+        
+        final = discord.utils.utcnow()  + time_object
+        await user.edit(timeout_until=final)
+        await ctx.send(embed=discord.Embed(title=f"{user.name} got timedout",description=f"{user.mention} got timed out for {time} {unit} For {reason}",color=Colors.green))
+
+
+    @commands.command()
+    @commands.has_permissions(moderate_members=True)
+    async def untimeout(self,ctx,user : discord.Member) -> Optional[Coroutine]:
+        """
+        A command that removes the timeout from a person
+        """
+        if user:
+            await user.edit(timeout_until=discord.utils.utcnow())
+            return await ctx.send(embed=discord.Embed(title=f"",description=f"{user.name} got their timeout removed",color=Colors.green))
+        await ctx.send(embed=discord.Embed(title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}", description="Missing user Argument",color=Colors.red))
 def setup(bot):
     bot.add_cog(ban(bot))

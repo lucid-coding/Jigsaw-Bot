@@ -69,6 +69,7 @@ for filename in os.listdir("./commands"):
     if filename.endswith(".py"):
         bot.load_extension(f"commands.{filename[:-3]}")
 
+os.environ["JISHAKU_NO_UNDERSCORE"] = "True"
 bot.load_extension("jishaku")
 bot.get_command("jsk").hidden = True
 bot.run(TOKEN)
