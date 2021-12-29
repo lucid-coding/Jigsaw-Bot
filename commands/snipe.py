@@ -150,9 +150,7 @@ class snipe(commands.Cog):
         data = (i["text"] for i in x)
         data = list(data)
 
-        print(data)
         data = data[0].split()
-        print(data)
         if word not in data:
             return await ctx.send(
                 embed=discord.Embed(

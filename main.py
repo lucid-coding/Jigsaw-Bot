@@ -43,7 +43,6 @@ bot = commands.Bot(
     case_insensitive=True,
     intents=intents,
     slash_commands=True,
-    slash_command_guilds=[833120463135834162, 758035468322471958],
 )
 bot.remove_command("help")
 
