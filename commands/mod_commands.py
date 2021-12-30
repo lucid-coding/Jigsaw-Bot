@@ -207,6 +207,12 @@ class ban(commands.Cog):
     @commands.cooldown(1, 5, BucketType.member)
     @commands.command()
     async def kick(self, ctx, user: discord.Member, *, reason="there was no reason."):
+        """
+        A command that kicks a user
+        ---
+        Arguments ->
+        user
+        """
         if not self.check(ctx, user):
             return await ctx.send(
                 embed=discord.Embed(
@@ -307,7 +313,7 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
-        if reason is None:
+        if reason is None
             reason = "Reason: None"
 
         def function_converter(time):
