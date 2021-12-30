@@ -26,7 +26,7 @@ intents = discord.Intents(
 async def get_pre(bot, message) -> str:
     """
     A corotinue where it gets the message and returns a string
-        ---
+      ---
     Arguments -> bot : discord.Object
     message - > discord.Contenxt
     """

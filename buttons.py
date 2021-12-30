@@ -79,7 +79,6 @@ class HelpView(View):
                 f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
                 ephemeral=True,
             )
-            await self.ctx.send(f"you are not {self.ctx.author}")
             return False
         return True
 

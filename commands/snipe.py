@@ -62,6 +62,11 @@ class snipe(commands.Cog):
 
     @commands.command(aliases=["s"])
     async def snipe(self, ctx):
+        """
+        Gets the recent deleted message and shows it.
+        ---
+        No arguments 
+        """
         if self.message is None:
             return await ctx.send("there are no deleted messages")
         embed = discord.Embed()
@@ -75,7 +80,12 @@ class snipe(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def blacklist(self, ctx, stuff=None):
+    async def blacklist(self, ctx, stuff=None) -> Coroutine:
+        """
+        A command that blacklist some word.
+        ---
+        Argumnets -> string
+        """
         if stuff is None:
             return await ctx.send("please select some stuff")
         data = await self.bot.blacklist_db.fetch(
