@@ -313,7 +313,7 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
-        if reason is None
+        if reason is None:
             reason = "Reason: None"
 
         def function_converter(time):
