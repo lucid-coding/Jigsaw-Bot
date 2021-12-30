@@ -45,7 +45,12 @@ class ban(commands.Cog):
         return conv[unit]
 
     async def cog_command_error(self, ctx, error) -> Coroutine:
-
+        """
+        A Cog error handler
+        ---
+        arguements -> ctx discord.ctx
+        error is the procided error.
+        """
         view = View()
         button = Delete_button(ctx)
         view.add_item(button)
@@ -135,6 +140,12 @@ class ban(commands.Cog):
     async def unban(
         self, ctx, *, member: typing.Union[discord.Object, discord.User]
     ) -> None:
+        """
+        Unban command only a user can be passed
+        ---
+        Arguement Union[discord.Object,discord.User, discord.Member]
+        -> None
+        """
         await ctx.guild.unban(member)
         embed = discord.Embed(title=f"{member} got unbanned")
         embed.set_thumbnail(url=ctx.guild.icon.url)
@@ -146,7 +157,16 @@ class ban(commands.Cog):
     @commands.has_permissions(ban_members=True)
     @commands.cooldown(1, 5, BucketType.member)
     @commands.command()
-    async def pban(self, ctx, user: discord.Member, *, reason=None):
+    async def pban(self, ctx, user: discord.Member, *, reason=None) -> Coroutine:
+        """
+        Purge banned command, Purges a user messages and bans them
+        ---
+        Arugments
+        ctx : discord.ctx
+        user : discord.Member 
+        reason : string
+
+        """
         if not self.check(ctx, user):
             return await ctx.send(
                 embed=discord.Embed(
@@ -253,7 +273,16 @@ class ban(commands.Cog):
         time_n_unit="1h",
         *,
         reason="there was no reason",
-    ):
+    ) -> Coroutine:
+        """
+        A command that mutes a user
+        ---
+        Arguments ->
+        ctx : discord.ctx 
+        user : discord.Member which represents a discord user or a account.
+        time_n_unit : str ,which represents the time and the unit
+        reason : str , "The reason for the mute"
+        """
         if not self.check(ctx, user):
             return await ctx.send(
                 embed=discord.Embed(
@@ -329,7 +358,13 @@ class ban(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, user: discord.Member):
-
+        """
+        A command that unmutes a user, if there isnt a Muted discord.Object.role
+        ---
+        Arguments
+        ctx : discord.ctx
+        user : dicsord.Member . "which is a user/ account"
+        """
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not muted_role:
             return await ctx.send(
@@ -399,6 +434,11 @@ class ban(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 15, BucketType.member)
     async def help(self, ctx):
+        """
+        Are you lost ? feel free to use the help command.
+        ---
+        Arguements -> None
+        """
         view = HelpView(ctx)
         button = Delete_button(ctx)
         view.add_item(button)

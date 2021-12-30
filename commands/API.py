@@ -19,6 +19,11 @@ class catties(commands.Cog):
 
     @commands.command()
     async def cat(self, ctx):
+        """
+        A command that shows a picture of a cat
+        ---
+        Arguments -> None
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get("https://api.thecatapi.com/v1/images/search") as r:
                 if r.status == 200:
@@ -34,6 +39,11 @@ class catties(commands.Cog):
 
     @commands.command()
     async def dog(self, ctx):
+        """
+        A command that shows a picture of a dog
+        ---
+        Arguments -> None
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get("https://dog.ceo/api/breeds/image/random") as r:
                 if r.status == 200:
@@ -49,6 +59,14 @@ class catties(commands.Cog):
 
     @commands.command()
     async def kiss(self, ctx, member: discord.Member) -> str:
+        """
+        A command that sends a "kissing gif" to any user 
+        
+        ---
+        Arguments ->
+        member : discord.Member
+
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://kawaii.red/api/gif/kiss/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
@@ -69,6 +87,13 @@ class catties(commands.Cog):
 
     @commands.command()
     async def gay(self, ctx, member: discord.Member = None) -> None:
+        """
+        Shows how gay a user is.
+        ---
+        Arguements -> 
+        Member : Optional[discord.Member]
+        """
+        
         member = member or ctx.author
         lst = [
             0,
@@ -101,6 +126,13 @@ class catties(commands.Cog):
 
     @commands.command()
     async def pp(self, ctx, member: discord.Member = None) -> None:
+        """
+        Shows how much you packin ;) you can also try it on someone
+        ---
+        Arguments ->
+        member : discord.Member
+        
+        """
         member = member or ctx.author
         lst = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         pp = random.choice(lst) * "="
@@ -110,7 +142,14 @@ class catties(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def hug(self, ctx, member: discord.Member) -> str:
+    async def hug(self, ctx, member: discord.Member) -> None:
+        """
+        A command that sends a "hugging gif" to any user 
+        
+        ---
+        Arguments ->
+        member : discord.Member
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://kawaii.red/api/gif/hug/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
@@ -135,6 +174,13 @@ class catties(commands.Cog):
 
     @commands.command()
     async def cuddle(self, ctx, member: discord.Member) -> str:
+        """
+        A command that sends a "cuddling gif" to any user 
+        
+        ---
+        Arguments ->
+        member : discord.Member
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://kawaii.red/api/gif/cuddle/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
@@ -158,7 +204,14 @@ class catties(commands.Cog):
                     await ctx.send(embed=embed)
 
     @commands.command()
-    async def slap(self, ctx, member: discord.Member) -> str:
+    async def slap(self, ctx, member: discord.Member) -> None:
+        """
+        A command that sends a "slap gif" to any user 
+        
+        ---
+        Arguments ->
+        member : discord.Member
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://kawaii.red/api/gif/slap/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
@@ -177,7 +230,12 @@ class catties(commands.Cog):
                     await ctx.send(embed=embed)
 
     @commands.command()
-    async def pat(self, ctx, member: discord.Member) -> str:
+    async def pat(self, ctx, member: discord.Member) -> None:
+        """
+        A command to pat any user.
+        ---
+        Arguments -> discord.Member
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://kawaii.red/api/gif/pat/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
@@ -202,6 +260,11 @@ class catties(commands.Cog):
 
     @commands.command()
     async def kill(self, ctx, member: discord.Member) -> str:
+        """
+        A command to kill any user. dont kill yourself tho
+        ---
+        Arguments -> discord.Member
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://kawaii.red/api/gif/kill/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"

@@ -1,5 +1,6 @@
 import asyncio
 import random
+from typing import Coroutine, Optional
 import discord
 from discord.ext import commands
 
@@ -13,7 +14,14 @@ class AfkCommand(commands.Cog):
         self.pings = pings or {}
 
     @commands.command()
-    async def afk(self, ctx, *, message=None):
+    async def afk(self, ctx, *, message=None) -> Optional[Coroutine]:
+        """
+        An afk command.
+        ---
+        Arugments ->
+        Optinal[message] : str
+
+        """
         if ctx.author.id in self.dct:
 
             return await ctx.send(
