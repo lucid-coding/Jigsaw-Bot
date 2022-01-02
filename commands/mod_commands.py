@@ -305,6 +305,16 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
+        if isinstance(user,int):
+            role = ctx.guild.get(user)
+            if not role:     
+                return await ctx.send(
+                    embed=discord.Embed(
+                        title=f"{random.choice(Replies.error_replies)}",
+                        description="The id seems to be invalid.",
+                        color=Colors.red,
+                    )
+                )
         if user is None:
             return await ctx.send(
                 embed=discord.Embed(
@@ -313,8 +323,7 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
-        if reason is None:
-            reason = "Reason: None"
+        reason = reason or "Reason: None"
 
         def function_converter(time):
             unit = time[-1]
@@ -341,7 +350,12 @@ class ban(commands.Cog):
                 )
             await ctx.send("muted role was not found , finished creating one")
         await user.add_roles(muted_role)
-        x = function_converter(time_n_unit)
+        try:
+            x = function_converter(time_n_unit)
+        except ValueError:
+            x = 3600
+            reason = "Reason: None"
+            time_n_unit = "1h"
         self.muted_people[user.id] = x
         embed = discord.Embed(title=f"{user.name} has been muted")
         embed.add_field(
@@ -371,6 +385,17 @@ class ban(commands.Cog):
         ctx : discord.ctx
         user : dicsord.Member . "which is a user/ account"
         """
+        if isinstance(user,int):
+            role = ctx.guild.get(user)
+            if not role:     
+                return await ctx.send(
+                    embed=discord.Embed(
+                        title=f"{random.choice(Replies.error_replies)}",
+                        description="The id seems to be invalid.",
+                        color=Colors.red,
+                    )
+                )
+                    
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not muted_role:
             return await ctx.send(
@@ -405,7 +430,15 @@ class ban(commands.Cog):
             embed.set_footer(
                 text=f"executed by {ctx.author}", icon_url=ctx.author.avatar.url
             )
-            self.muted_people.pop(user.id)
+            try:
+                self.muted_people.pop(user.id)
+            except ValueError:
+                        await ctx.send(
+            embed=discord.Embed(
+                title="that following user isn't muted ", color=Colors.red
+            )
+        )
+                
             return await ctx.send(embed=embed)
         await ctx.send(
             embed=discord.Embed(

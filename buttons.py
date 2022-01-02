@@ -3,12 +3,12 @@ A file where buttons are stored
 """
 
 import discord
+from discord.enums import ButtonStyle
 from constants import Colors, Replies, Emojis, BOTNAME
 from discord.ext import commands
 from discord.ui import Button, View
 import random
 from typing import Coroutine, Optional, Literal
-
 
 class Delete_button(Button):
     """
@@ -32,7 +32,6 @@ class Delete_button(Button):
             style=self._style or discord.ButtonStyle.danger,
             emoji=f"{random.choice(Emojis.trash_emojis)}",
         )
-
     async def callback(self, interaction) -> Coroutine:
         """
         A discord.ui.button callback function returns a coroutine
@@ -63,10 +62,14 @@ class HelpView(View):
     """
 
     def __init__(
-        self, ctx: commands.Context, *, timeout: Optional[float] = 180
-    ) -> None:
+        self, ctx: commands.Context, *, timeout: Optional[float] = 180) -> None:
+
         super().__init__(timeout=timeout)
+
         self.ctx = ctx
+
+        self.add_item(Button(label="Invite me !",url="https://discord.com/api/oauth2/authorize?client_id=820603175048445953&permissions=8&scope=bot%20applications.commands"))
+
 
     async def on_error(self, error, _, interaction) -> Coroutine:
         return await interaction.response.send_message(

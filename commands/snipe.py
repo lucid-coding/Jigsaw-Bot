@@ -211,7 +211,6 @@ class snipe(commands.Cog):
         try:
             blacklisted_text = self.blacklisted_stuff[message.guild.id]
         except Exception as E:
-            print(E, __file__)
             return None
         statment = set(blacklisted_text.split()) & set(content)
         if statment:
