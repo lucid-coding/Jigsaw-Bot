@@ -103,6 +103,18 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
+        
+        if isinstance(user,int):
+            user = self.bot.fetch_user(user)
+            if not user:     
+                return await ctx.send(
+                    embed=discord.Embed(
+                        title=f"{random.choice(Replies.error_replies)}",
+                        description="The id seems to be invalid.",
+                        color=Colors.red,
+                    )
+                )
+                    
         if ctx.author.id == user.id:
             return await ctx.send(
                 embed=discord.Embed(
@@ -147,7 +159,7 @@ class ban(commands.Cog):
         -> None
         """
         await ctx.guild.unban(member)
-        embed = discord.Embed(title=f"{member} got unbanned")
+        embed = discord.Embed(title='user got unbanned')
         embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.set_footer(
             text=f"executed by {ctx.author}", icon_url=ctx.author.avatar.url
@@ -175,6 +187,17 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
+        if isinstance(user,int):
+            user = self.bot.fetch_user(user)
+            if not user:     
+                return await ctx.send(
+                    embed=discord.Embed(
+                        title=f"{random.choice(Replies.error_replies)}",
+                        description="The id seems to be invalid.",
+                        color=Colors.red,
+                    )
+                )
+                    
         if user.id == ctx.author.id:
             return await ctx.send(
                 embed=discord.Embed(
