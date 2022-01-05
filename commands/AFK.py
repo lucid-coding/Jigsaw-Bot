@@ -47,7 +47,6 @@ class AfkCommand(commands.Cog):
     async def on_message(self, message):
 
         if message.author.id in self.dct.keys():
-
             self.dct.pop(message.author.id)
             if self.pings[message.author.id] == 0:
                 return await message.channel.send(
@@ -61,12 +60,12 @@ class AfkCommand(commands.Cog):
 
                 return await message.channel.send(embed=discord.Embed(title=
                     f"{random.choice(Replies.welcome_back_replies)}",
-                    description="you've been pinged {self.pings[message.author.id]} time")
+                    description=f"you've been pinged {self.pings[message.author.id]} time")
                 )
 
             return await message.channel.send(embed=discord.Embed(title=
                 f"{random.choice(Replies.welcome_back_replies)}",
-                description=f"welcome back {message.author.mention} you've been pinged{self.pings[message.author.id]} times "
+                description=f"welcome back {message.author.mention} you've been pinged {self.pings[message.author.id]} times "
             
             ))
         else:
@@ -82,8 +81,8 @@ class AfkCommand(commands.Cog):
                     else:
                         await message.channel.send(
                             embed=discord.Embed(
-                                title="you've pinged someone whos afk",
-                                description=user_message,
+                                title="You've pinged someone whos afk",
+                                description=f"With status : {user_message}",
                             )
                         )
                     self.pings[member.id] = self.pings[member.id] + 1
