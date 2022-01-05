@@ -59,13 +59,16 @@ class AfkCommand(commands.Cog):
 
             elif self.pings[message.author.id] == 1:
 
-                return await message.channel.send(
-                    f"welcome back {message.author.mention} you've been pinged {self.pings[message.author.id]} time"
+                return await message.channel.send(embed=discord.Embed(title=
+                    f"{random.choice(Replies.welcome_back_replies)}",
+                    description="you've been pinged {self.pings[message.author.id]} time")
                 )
 
-            return await message.channel.send(
-                f"welcome back {message.author.mention} you've been pinged {self.pings[message.author.id]} times"
-            )
+            return await message.channel.send(embed=discord.Embed(title=
+                f"{random.choice(Replies.welcome_back_replies)}",
+                description=f"welcome back {message.author.mention} you've been pinged{self.pings[message.author.id]} times "
+            
+            ))
         else:
             for member in message.mentions:
                 if member != message.author and member.id in self.dct:
