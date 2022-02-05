@@ -1,75 +1,115 @@
-from typing import Coroutine
-from discord.components import Button
+from typing import Optional
+from aiosqlite.core import Connection
 from discord.ext import commands
-from discord.ui.view import View
-from buttons import Delete_button
-from constants import Replies, Emojis, Colors
-import random
-import discord
+import aiosqlite
+from discord import Message
 
 
-class PrefixClass(commands.Cog):
+class PrefixHandler(commands.Cog):
     """
-    A Cog that handles most things about prefixes
-    ---
-    and where the prefix is delcared in main file
-    bot.db2 is delcared in the pool
+    A That handles Stuff related to the Database
     """
-
-    def __init__(self, bot):
-        self.bot = bot
-
-    async def cog_command_error(self, ctx, error) -> None:
-        await ctx.send(
-            embed=discord.Embed(
-                title=f"{random.choice(Replies.error_replies)}"
-                + f"{random.choice(Emojis.pepe_sad_emojis)}",
-                description=error,
-                color=Colors.red,
-            )
-        )
 
     @commands.command()
-    async def prefix(self, ctx, prefix=None) -> Coroutine:
-        """A function that sets a prefix to the Arugment
-        ---
-        Arguments -> String
-        Expects it to be a string
-        """
-        view = View()
-        button = Delete_button(ctx)
-        view.add_item(button)
-        if not prefix:
-            return await ctx.send(
-                embed=discord.Embed(
-                    title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
-                    description="please provide a prefix **this command is used to change the bot prefix**",
-                    color=Colors.red,
-                ),
-                view=view,
-            )
-
-        data = await self.bot.db2.fetch(
-            "SELECT prefix from prefix_table where id = $1", ctx.guild.id
-        )
-        if not data:
-            await self.bot.db2.execute(
-                "INSERT INTO prefix_table VALUES($1,$2)", ctx.guild.id, prefix
-            )
-        else:
-            await self.bot.db2.execute(
-                "UPDATE prefix_table SET prefix = $1 where id = $2",
-                prefix,
-                ctx.guild.id,
-            )
-        await ctx.send(
-            embed=discord.Embed(
-                title="success",
-                description=f"{prefix} has been stored",
-                color=Colors.green,
-            )
-        )
+    async def prefix(self, ctx: commands.Context, new_prefix: str) -> Message:
+        await PrefixManager.prefix_setter(ctx, new_prefix)
+        return await ctx.send(f"prefix has been set to {new_prefix}")
 
 
 def setup(bot):
-    bot.add_cog(PrefixClass(bot))
+    bot.add_cog(PrefixHandler(bot))
+
+
+class PrefixManager:
+    """
+    Class for actually dealing with the bot's prefix database
+    """
+
+    async def prefix_for_bot_class(bot: commands.Bot, message: Message):
+        prefix = await PrefixManager.prefix_getter(message)
+        return commands.when_mentioned_or(prefix)(bot, message)
+
+    @staticmethod
+    async def table_check() -> None:
+        """
+        A PrefixHandler static method that checks if the tables were maid or not
+        ---
+        Arguments -> None
+        """
+        async with aiosqlite.connect("database/guilds.db") as connection:
+            async with connection.cursor() as cursor:
+                await cursor.execute(
+                    """
+                CREATE TABLE IF NOT EXISTS prefixes(
+                    guild_id bigint,
+                    prefix TEXT
+                    
+                )
+                """
+                )
+
+    async def prefix_setter(
+        ctx: commands.Context, new_prefix: str
+    ) -> Optional[Connection]:
+        """
+        A Corotinue that gets the prefix of the guild.
+        ---
+        Arguments ->
+        ctx : commands.Context
+        new_prefix: str
+        """
+        async with aiosqlite.connect("database/guilds.db") as connection:
+            async with connection.cursor() as cursor:
+                await cursor.execute(
+                    """
+                    SELECT * FROM prefixes
+                    WHERE guild_id = ?
+                    """,
+                    (ctx.guild.id,),
+                )
+                if await cursor.fetchone():
+                    await cursor.execute(
+                        """
+                        UPDATE prefixes
+                        SET prefix = ?
+                        WHERE guild_id = ?
+                        """,
+                        (
+                            new_prefix,
+                            ctx.guild.id,
+                        ),
+                    )
+                else:
+                    await cursor.execute(
+                        """
+                        INSERT INTO prefixes
+                        ( guild_id , prefix )
+                        VALUES (? , ?)
+                        """,
+                        (
+                            ctx.guild.id,
+                            new_prefix,
+                        ),
+                    )
+                return await connection.commit()
+
+    async def prefix_getter(message: Message) -> str:
+        """
+        A Corotinue that gets the prefix of the guild.
+        ---
+        Arguments ->
+        bot : commands.Object , "which is the bot in other words or the object of commands"
+        message : commands.Message
+        """
+
+        async with aiosqlite.connect("database/guilds.db") as connection:
+            async with connection.cursor() as cursor:
+                await cursor.execute(
+                    """
+                    SELECT * FROM prefixes
+                    WHERE guild_id = ?
+                    """,
+                    (message.guild.id,),
+                )
+                data = await cursor.fetchone()
+            return data[1] if data else "$"

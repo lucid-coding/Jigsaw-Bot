@@ -1,9 +1,9 @@
+from commands.prefix import PrefixManager
 import re
 import random
 from typing import Coroutine
 from discord.ext import commands
 import discord
-from discord.message import Message
 from discord.ui import View
 from constants import Colors, Replies, Emojis
 from buttons import Delete_button
@@ -37,10 +37,6 @@ class On_ready(commands.Cog):
             view.add_item(button)
             return await ctx.send(embed=embed, view=view)
         raise error
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print("logged in")
 
     async def cog_command_error(self, ctx, error):
         return await ctx.send(
@@ -80,15 +76,7 @@ class On_ready(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> Coroutine:
         if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content):
-            x = await self.bot.db2.fetch(
-                "SELECT prefix from prefix_table where id = $1", message.guild.id
-            )
-            x = (i["prefix"] for i in x)
-            if x:
-
-                return await message.channel.send(f"My prefix is `{x.__next__()}`")
-            return await message.channel.send("My prefix is $")
-
+            await message.channel.send(f'my prefix is `{ await PrefixManager.prefix_getter(message)}` ')
 
 def setup(bot):
     bot.add_cog(On_ready(bot))

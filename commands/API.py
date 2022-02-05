@@ -14,6 +14,7 @@ class catties(commands.Cog):
             embed=discord.Embed(
                 title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
                 description=error,
+                color=Colors.red
             )
         )
 
