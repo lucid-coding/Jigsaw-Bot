@@ -36,7 +36,8 @@ class On_ready(commands.Cog):
             button = Delete_button(ctx)
             view.add_item(button)
             return await ctx.send(embed=embed, view=view)
-        raise error
+        if not isinstance(error, commands.CommandOnCooldown):
+            raise error
 
     async def cog_command_error(self, ctx, error):
         return await ctx.send(
@@ -76,7 +77,10 @@ class On_ready(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> Coroutine:
         if re.fullmatch(rf"<@!?{self.bot.user.id}>", message.content):
-            await message.channel.send(f'my prefix is `{ await PrefixManager.prefix_getter(message)}` ')
+            await message.channel.send(
+                f"my prefix is `{ await PrefixManager.prefix_getter(message)}` "
+            )
+
 
 def setup(bot):
     bot.add_cog(On_ready(bot))

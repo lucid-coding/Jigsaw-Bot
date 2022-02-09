@@ -2,7 +2,7 @@ import random
 import discord
 from discord.ext import commands
 import aiohttp
-from constants import Replies, Emojis
+from constants import Replies, Emojis, Colors
 
 
 class catties(commands.Cog):
@@ -14,7 +14,7 @@ class catties(commands.Cog):
             embed=discord.Embed(
                 title=f"{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}",
                 description=error,
-                color=Colors.red
+                color=Colors.red,
             )
         )
 
@@ -61,8 +61,8 @@ class catties(commands.Cog):
     @commands.command()
     async def kiss(self, ctx, member: discord.Member) -> str:
         """
-        A command that sends a "kissing gif" to any user 
-        
+        A command that sends a "kissing gif" to any user
+
         ---
         Arguments ->
         member : discord.Member
@@ -91,10 +91,10 @@ class catties(commands.Cog):
         """
         Shows how gay a user is.
         ---
-        Arguements -> 
+        Arguements ->
         Member : Optional[discord.Member]
         """
-        
+
         member = member or ctx.author
         lst = [
             0,
@@ -132,7 +132,7 @@ class catties(commands.Cog):
         ---
         Arguments ->
         member : discord.Member
-        
+
         """
         member = member or ctx.author
         lst = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -145,8 +145,8 @@ class catties(commands.Cog):
     @commands.command()
     async def hug(self, ctx, member: discord.Member) -> None:
         """
-        A command that sends a "hugging gif" to any user 
-        
+        A command that sends a "hugging gif" to any user
+
         ---
         Arguments ->
         member : discord.Member
@@ -176,8 +176,8 @@ class catties(commands.Cog):
     @commands.command()
     async def cuddle(self, ctx, member: discord.Member) -> str:
         """
-        A command that sends a "cuddling gif" to any user 
-        
+        A command that sends a "cuddling gif" to any user
+
         ---
         Arguments ->
         member : discord.Member
@@ -207,8 +207,8 @@ class catties(commands.Cog):
     @commands.command()
     async def slap(self, ctx, member: discord.Member) -> None:
         """
-        A command that sends a "slap gif" to any user 
-        
+        A command that sends a "slap gif" to any user
+
         ---
         Arguments ->
         member : discord.Member

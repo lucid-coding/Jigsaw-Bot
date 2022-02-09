@@ -1,12 +1,12 @@
 import aiosqlite
 import discord
 
-# just a fake push
+
 class User:
     @staticmethod
     async def table_check() -> None:
         """
-        A PrefixHandler static method that checks if the tables were maid or not
+        A PrefixHandler static method that checks if the tables were made or not
         ---
         Arguments -> None
         """

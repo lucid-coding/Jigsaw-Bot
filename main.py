@@ -1,7 +1,9 @@
+import asyncio
 from discord.ext import commands
 from os import getenv, listdir
 from discord import Intents, AllowedMentions
 from commands.prefix import PrefixManager
+from commands.welcome import Welcome
 from userdb import User
 
 
@@ -17,7 +19,7 @@ class LucidBot(commands.Bot):
                 everyone=False, replied_user=False, roles=False
             ),
         )
-        self.remove_command('help')
+        self.remove_command("help")
         self.load_extension("jishaku")
         self.get_command("jishaku").hidden = True
         """Jishaku is hidden within the help command"""
@@ -37,9 +39,7 @@ class LucidBot(commands.Bot):
         return self.INVITE_URL
 
     async def on_ready(self) -> None:
-        await PrefixManager.table_check()
-        await User.table_check()
-        print('Done checking tables')
+        print(f"Logged in as {self.user} ID : {self.user.id}")
         self.INVITE_URL = f"https://discord.com/api/oauth2/authorize?client_id={self.user.id}&permissions=3691367512&scope=bot%20applications.commands"
 
     def run(self):
@@ -47,5 +47,10 @@ class LucidBot(commands.Bot):
 
 
 if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(Welcome.table_check())
+    loop.run_until_complete(User.table_check())
+    loop.run_until_complete(PrefixManager.table_check())
+    print("done checking tables")
     bot = LucidBot(getenv("token"))
     bot.run()

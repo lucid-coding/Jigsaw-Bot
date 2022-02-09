@@ -103,10 +103,10 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
-        
-        if isinstance(user,int):
+
+        if isinstance(user, int):
             user = self.bot.fetch_user(user)
-            if not user:     
+            if not user:
                 return await ctx.send(
                     embed=discord.Embed(
                         title=f"{random.choice(Replies.error_replies)}",
@@ -114,7 +114,7 @@ class ban(commands.Cog):
                         color=Colors.red,
                     )
                 )
-                    
+
         if ctx.author.id == user.id:
             return await ctx.send(
                 embed=discord.Embed(
@@ -159,7 +159,7 @@ class ban(commands.Cog):
         -> None
         """
         await ctx.guild.unban(member)
-        embed = discord.Embed(title='user got unbanned')
+        embed = discord.Embed(title="user got unbanned")
         embed.set_thumbnail(url=ctx.guild.icon.url)
         embed.set_footer(
             text=f"executed by {ctx.author}", icon_url=ctx.author.avatar.url
@@ -175,7 +175,7 @@ class ban(commands.Cog):
         ---
         Arugments
         ctx : discord.ctx
-        user : discord.Member 
+        user : discord.Member
         reason : string
 
         """
@@ -187,9 +187,9 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
-        if isinstance(user,int):
+        if isinstance(user, int):
             user = self.bot.fetch_user(user)
-            if not user:     
+            if not user:
                 return await ctx.send(
                     embed=discord.Embed(
                         title=f"{random.choice(Replies.error_replies)}",
@@ -197,7 +197,7 @@ class ban(commands.Cog):
                         color=Colors.red,
                     )
                 )
-                    
+
         if user.id == ctx.author.id:
             return await ctx.send(
                 embed=discord.Embed(
@@ -307,7 +307,7 @@ class ban(commands.Cog):
         A command that mutes a user
         ---
         Arguments ->
-        ctx : discord.ctx 
+        ctx : discord.ctx
         user : discord.Member which represents a discord user or a account.
         time_n_unit : str ,which represents the time and the unit
         reason : str , "The reason for the mute"
@@ -328,9 +328,9 @@ class ban(commands.Cog):
                     color=Colors.red,
                 )
             )
-        if isinstance(user,int):
+        if isinstance(user, int):
             role = ctx.guild.get(user)
-            if not role:     
+            if not role:
                 return await ctx.send(
                     embed=discord.Embed(
                         title=f"{random.choice(Replies.error_replies)}",
@@ -408,9 +408,9 @@ class ban(commands.Cog):
         ctx : discord.ctx
         user : dicsord.Member . "which is a user/ account"
         """
-        if isinstance(user,int):
+        if isinstance(user, int):
             role = ctx.guild.get(user)
-            if not role:     
+            if not role:
                 return await ctx.send(
                     embed=discord.Embed(
                         title=f"{random.choice(Replies.error_replies)}",
@@ -418,7 +418,7 @@ class ban(commands.Cog):
                         color=Colors.red,
                     )
                 )
-                    
+
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not muted_role:
             return await ctx.send(
@@ -445,8 +445,7 @@ class ban(commands.Cog):
                 )
             )
 
-        role = discord.utils.get(user.roles, name="Muted")
-        if role:
+        if role := discord.utils.get(user.roles, name="Muted"):
             await user.remove_roles(role)
             embed = discord.Embed(title=f"{user} got unmuted")
             embed.set_thumbnail(url=ctx.guild.icon.url)
@@ -456,12 +455,12 @@ class ban(commands.Cog):
             try:
                 self.muted_people.pop(user.id)
             except ValueError:
-                        await ctx.send(
-            embed=discord.Embed(
-                title="that following user isn't muted ", color=Colors.red
-            )
-        )
-                
+                await ctx.send(
+                    embed=discord.Embed(
+                        title="that following user isn't muted ", color=Colors.red
+                    )
+                )
+
             return await ctx.send(embed=embed)
         await ctx.send(
             embed=discord.Embed(
