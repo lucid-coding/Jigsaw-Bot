@@ -1,6 +1,7 @@
 """
 A file where buttons are stored
 """
+from main import LucidBot
 
 from ctypes import Union
 import discord
@@ -77,7 +78,7 @@ class HelpView(View):
         self.add_item(
             Button(
                 label="Invite me !",
-                url="https://discord.com/api/oauth2/authorize?client_id=820603175048445953&permissions=8&scope=bot%20applications.commands",
+                url=self.ctx.bot.INVITE_URL,
             )
         )
 
