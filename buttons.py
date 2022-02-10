@@ -248,4 +248,14 @@ class HelpView(View):
             value=f"{self.prefix}highlow amount 'guess the number' \n Arguments are 'high' or 'low' and 'jackpot'",
             inline=False
         )
+        embed.add_field(
+            name=f"{self.prefix}pull",
+            value=f"{self.prefix}pull , you either stop, or skip you start from 500, then it adds 500 to it, until you skip for 3 times it starts doubling \nArguments are None",
+            inline=False
+        )
+        embed.add_field(
+            name=f"{self.prefix}pay",
+            value=f"{self.prefix}pay <@{BOTNAME}> amount 'pay someone' \n Arguments are 'amount' and '@user'",
+            inline=False
+        )
         await interaction.message.edit(embed=embed)

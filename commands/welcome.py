@@ -142,6 +142,8 @@ class Welcome(commands.Cog):
         ---
         Returns -> Nono
         """
+        if member.guild.id not in self.server_config:
+            return
         embed = discord.Embed(
             title=f"welcome to {member.guild.name}",
             description=self.server_config[member.guild.id]["welcome_message"]

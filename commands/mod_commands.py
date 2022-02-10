@@ -582,8 +582,8 @@ class ban(commands.Cog):
                     title=f"",
                     description=f"{user.name} got their timeout removed",
                     color=Colors.green,
-                    view=view,
-                )
+                ),
+             view=view,
             )
         await ctx.send(
             embed=discord.Embed(

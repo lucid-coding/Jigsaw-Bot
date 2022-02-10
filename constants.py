@@ -32,7 +32,7 @@ class Emojis:
     fun_button = "<a:DanceLightSaber:793880620782190592>"
     mod_button = "<:moderator:857241458889195571>"
     economy_button = '<:economy_button:941016748109488130>'
-    welcome_button = '<:wave:859466280218132531>'
+    welcome_button = '<:welcome_button:941016748109488130>'
     sus_emoji = "<:suspeepo:920001743536926782>"
     currency_emoji = "<:currency:939966655134588938>"
 
@@ -143,6 +143,8 @@ class ImageUrls:
     A class to taht stores ImageUrls that are constants
     """
     win_url = 'https://cdn.discordapp.com/attachments/939956056795262978/939958253759111228/unknown.png'
-    lose_url = 'https://cdn.discordapp.com/attachments/939956056795262978/939958931239878656/unknown.png'
+    lose_url = 'https://cdn.discordapp.com/attachments/939956056795262978/939958253759111228/unknown.png'
     treasure_url = 'https://cdn.discordapp.com/attachments/939956056795262978/939957865010053160/unknown.png'
     bank_url = 'https://cdn.discordapp.com/attachments/918891402224611379/939944596664881182/unknown.png'
+    bag_url = 'https://cdn.discordapp.com/attachments/939956056795262978/939958931239878656/unknown.png'
+    error_url = 'https://cdn.discordapp.com/emojis/601404540444737536.png'
