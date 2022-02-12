@@ -90,26 +90,6 @@ class AfkCommand(commands.Cog):
                         )
                     self.pings[member.id] = self.pings[member.id] + 1
 
-    # @commands.command(aliases=['store_messages'])
-    # async def store(self,ctx,*,message=None):
-    #     if message is None : return await ctx.send('we need a message sir')
-    #     await self.bot.db.execute("INSERT INTO messages VALUES ($1 ,$2) ",ctx.author.id,message)
-    #     await ctx.send(f'Done inserting {message} into the database')
-    # @commands.command(aliases=['show_messages'])
-    # async def show(self,ctx):
-    #     x = await self.bot.db.fetch("SELECT message FROM messages WHERE ID = $1",ctx.author.id)
-    #     if len(x) == 0:
-    #         return await ctx.send(embed=discord.Embed(title=f'{ctx.author.name} messages',description='No messages are available for this user'))
-
-    #     return await ctx.send(embed=discord.Embed(title=f'{ctx.author.name} messages',description='\n'.join(record["message"] for record in x)))
-    # @commands.command(aliases=['delete_messages'])
-    # async def delete(self,ctx,*,message):
-    #     x = await self.bot.db.fetch("DELETE FROM messages where id = $1 and message = $2",ctx.author.id,message)
-    # @commands.command(aliases=['delete_all_messages'])
-    # async def delete_all(self,ctx):
-    #     x = await self.bot.db.fetch("DELETE FROM messages where id = $1",ctx.author.id)
-    #     return await ctx.send(":thumbsup:")
-
 
 def setup(bot):
     bot.add_cog(AfkCommand(bot))
