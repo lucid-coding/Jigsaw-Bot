@@ -191,6 +191,11 @@ class HelpView(View):
             value=f'{self.prefix}Dog\n{self.prefix}Cat',
             inline=False
         )
+        embed.add_field(
+            name="extra commands",
+            value=f'{self.prefix}afk "{self.prefix}afk reason"',
+            inline=False
+        )
         await interaction.message.edit(embed=embed)
 
     @discord.ui.button(
@@ -208,7 +213,7 @@ class HelpView(View):
             name=f"{self.prefix}Avatar", value=f"{self.prefix}Avatar 'displays an image of User'"
         )
         embed.add_field(
-            name=f"{self.prefix}self.prefix",
+            name=f"{self.prefix}prefix",
             value=f"changes the server prefix and can be used like '{self.prefix}prefix ! '",
         )
         await interaction.message.edit(embed=embed)
