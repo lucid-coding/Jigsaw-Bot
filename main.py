@@ -1,6 +1,6 @@
 import asyncio
 from discord.ext import commands
-from os import getenv, listdir
+from os import listdir
 from discord import Intents, AllowedMentions
 from commands.prefix import PrefixManager
 from commands.welcome import Welcome
@@ -28,7 +28,7 @@ class LucidBot(commands.Bot):
                 try:
                     self.load_extension(f"commands.{cog[:-3]}")
                 except Exception as e:
-                    raise e
+                    raise e from e
 
     @property
     def server_invite_url(self) -> str:
@@ -52,5 +52,7 @@ if __name__ == "__main__":
     loop.run_until_complete(User.table_check())
     loop.run_until_complete(PrefixManager.table_check())
     print("done checking tables")
-    bot = LucidBot(getenv("token"))
+    with open("token.json") as fhand:
+        token = fhand.read()
+    bot = LucidBot(token)
     bot.run()

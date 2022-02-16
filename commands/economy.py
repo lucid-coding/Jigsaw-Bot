@@ -1,5 +1,4 @@
 import random
-from tkinter import Image
 import discord
 import asyncio
 import random
