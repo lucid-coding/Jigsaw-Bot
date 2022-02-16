@@ -9,7 +9,7 @@ class PrefixHandler(commands.Cog):
     """
     A That handles Stuff related to the Database
     """
-
+    @commands.has_permissions(administrator=True)
     @commands.command()
     async def prefix(self, ctx: commands.Context, new_prefix: str) -> Message:
         await PrefixManager.prefix_setter(ctx, new_prefix)
