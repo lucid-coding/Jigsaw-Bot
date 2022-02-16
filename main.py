@@ -5,7 +5,7 @@ from discord import Intents, AllowedMentions
 from commands.prefix import PrefixManager
 from commands.welcome import Welcome
 from userdb import User
-
+import json
 
 class LucidBot(commands.Bot):
     def __init__(self, token) -> None:
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     loop.run_until_complete(User.table_check())
     loop.run_until_complete(PrefixManager.table_check())
     print("done checking tables")
-    with open("token.json") as fhand:
-        token = fhand.read()
-    bot = LucidBot(token)
+    with open("token.json") as f:
+        TOKEN = json.load(f)["TOKEN"]
+    bot = LucidBot(TOKEN)
     bot.run()

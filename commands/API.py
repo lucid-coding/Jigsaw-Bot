@@ -3,7 +3,9 @@ import discord
 from discord.ext import commands
 import aiohttp
 from constants import Replies, Emojis, Colors
-
+import json
+with open("token.json") as f:
+    API_TOKEN = json.load(f)["API_TOKEN"]
 
 class catties(commands.Cog):
     def __init__(self, bot):
@@ -70,7 +72,7 @@ class catties(commands.Cog):
         """
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://kawaii.red/api/gif/kiss/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
+                f"https://kawaii.red/api/gif/kiss/token={API_TOKEN}"
             ) as r:
                 if r.status == 200:
                     js = await r.json()
@@ -153,7 +155,7 @@ class catties(commands.Cog):
         """
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://kawaii.red/api/gif/hug/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
+                f"https://kawaii.red/api/gif/hug/token={API_TOKEN}"
             ) as r:
                 if r.status == 200:
                     js = await r.json()
@@ -184,7 +186,7 @@ class catties(commands.Cog):
         """
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://kawaii.red/api/gif/cuddle/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
+                f"https://kawaii.red/api/gif/cuddle/token={API_TOKEN}"
             ) as r:
                 if r.status == 200:
                     js = await r.json()
@@ -215,7 +217,7 @@ class catties(commands.Cog):
         """
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://kawaii.red/api/gif/slap/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
+                f"https://kawaii.red/api/gif/slap/token={API_TOKEN}"
             ) as r:
                 if r.status == 200:
                     js = await r.json()
@@ -239,7 +241,7 @@ class catties(commands.Cog):
         """
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://kawaii.red/api/gif/pat/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
+                f"https://kawaii.red/api/gif/pat/token={API_TOKEN}"
             ) as r:
                 if r.status == 200:
                     js = await r.json()
@@ -268,7 +270,7 @@ class catties(commands.Cog):
         """
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://kawaii.red/api/gif/kill/token=801474997238366209.QY8T1qkju7Jx6X0dlKss/"
+                f"https://kawaii.red/api/gif/kill/token={API_TOKEN}"
             ) as response:
                 if response.status == 200:
                     result = await response.json()
