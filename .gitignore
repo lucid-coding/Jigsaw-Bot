@@ -6,6 +6,8 @@ config.py
 # C extensions
 *.so
 .vscode/settings.json
+#json config file
+token.json
 # Distribution / packaging
 .Python
 build/
