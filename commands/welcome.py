@@ -79,7 +79,7 @@ class Welcome(commands.Cog):
                     for row in rows
                 }
 
-    @commands.has_permissions()
+    @commands.has_permissions(manage_guild=True)
     @commands.command()
     async def set_welcome(
         self, ctx, *, welcome_channel_id: int = None, welcome_message: str = None
