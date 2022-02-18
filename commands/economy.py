@@ -362,7 +362,9 @@ class Economy(commands.Cog):
                     embed.set_thumbnail(url=ImageUrls.bag_url)
                     embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
                     return await ctx.send(embed=embed)
-                elif bet.content.lower() == 'skip' and random.randrange(0,3):
+                if not random.randrange(0,5) and bet.content.lower() != 'stop':
+                    self.active_players.remove(ctx.author.id)
+                else:
                     self.number_of_times_played[ctx.author.id] = self.number_of_times_played.get(ctx.author.id,0) + 1 or 1
                     if self.number_of_times_played[ctx.author.id] >= 3:
                         amount *= 2
@@ -373,10 +375,6 @@ class Economy(commands.Cog):
                     embed.set_thumbnail(url=ImageUrls.bag_url)
                     embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
                     await ctx.send(embed=embed)
-                
-                else:
-                    self.active_players.remove(ctx.author.id)
-                
             except asyncio.TimeoutError:
                 await User.remove_balance(ctx.author,500)
                 return await ctx.send(f"{ctx.author.name} you took too long to play, you have lost your skip command")
