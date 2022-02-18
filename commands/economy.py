@@ -362,7 +362,7 @@ class Economy(commands.Cog):
                     embed.set_thumbnail(url=ImageUrls.bag_url)
                     embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
                     return await ctx.send(embed=embed)
-                elif bet.content.lower() == 'skip' and random.randrange(0,5):
+                elif bet.content.lower() == 'skip' and random.randrange(0,3):
                     self.number_of_times_played[ctx.author.id] = self.number_of_times_played.get(ctx.author.id,0) + 1 or 1
                     if self.number_of_times_played[ctx.author.id] >= 3:
                         amount *= 2
