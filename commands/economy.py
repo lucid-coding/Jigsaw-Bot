@@ -357,12 +357,12 @@ class Economy(commands.Cog):
 
                     self.active_players.remove(ctx.author.id)
                     await User.add_balance(ctx.author,amount)
-                    embed = discord.Embed(description=f'{ctx.author.name} you have stopped the game you won {amount}',color=Colors.yellow)
+                    embed = discord.Embed(description=f'{ctx.author.name} you have stopped the game you won {amount}{Emojis.currency_emoji}',color=Colors.yellow)
                     embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
                     embed.set_thumbnail(url=ImageUrls.bag_url)
                     embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
                     return await ctx.send(embed=embed)
-                if not random.randrange(0,5) and bet.content.lower() != 'stop':
+                if not random.randrange(0,3) and bet.content.lower() != 'stop':
                     self.active_players.remove(ctx.author.id)
                 else:
                     self.number_of_times_played[ctx.author.id] = self.number_of_times_played.get(ctx.author.id,0) + 1 or 1
