@@ -298,7 +298,8 @@ class Economy(commands.Cog):
             embed.set_footer(text=f"{ctx.author.name}'s highlow command", icon_url=ctx.author.avatar.url)
             await ctx.send(embed=embed)
             await User.remove_balance(ctx.author,number)
-
+    
+    @commands.cooldown(1,10,commands.BucketType.user)
     @commands.command()
     async def pull(self,ctx) -> Optional[Coroutine]:
         """
@@ -390,6 +391,7 @@ class Economy(commands.Cog):
             await ctx.send(embed=embed)
             await User.remove_balance(ctx.author,500)
     
+    @commands.cooldown(1,10,commands.BucketType.user)
     @commands.command(aliases=['give','gift','give_money','give_coins','give_credits'])
     async def pay(self,ctx, user : discord.Member, amount : int) -> Optional[Coroutine]:
         """
