@@ -292,7 +292,7 @@ class Economy(commands.Cog):
             await ctx.send(embed=embed)
             await User.add_balance(ctx.author,number)
         else:
-            embed = discord.Embed(title = f"{ctx.author.name}'s highlow command",description=f'you guessed wrong, you lost {number}{Emojis.currency_emoji} the number was {number}',color=Colors.yellow)
+            embed = discord.Embed(title = f"{ctx.author.name}'s highlow command",description=f'you guessed wrong, you lost 100{Emojis.currency_emoji} the number was {number}',color=Colors.yellow)
             embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
             embed.set_thumbnail(url=ImageUrls.lose_url)
             embed.set_footer(text=f"{ctx.author.name}'s highlow command", icon_url=ctx.author.avatar.url)
