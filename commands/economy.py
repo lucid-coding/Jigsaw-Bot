@@ -335,7 +335,7 @@ class Economy(commands.Cog):
             """
             return m.author == ctx.author and m.channel == ctx.channel
         amount = 500
-        embed = discord.Embed(title = f"{ctx.author.name}'s skip command",description=f'{ctx.author.name} you have {await User.balance(ctx.author)} coins the game costs 500{Emojis.currency_emoji}\n use "skip" to go for a higher bet and "stop" to secure the bag.',color=Colors.yellow)
+        embed = discord.Embed(title = f"{ctx.author.name}'s skip command",description=f'{ctx.author.name} you have {await User.balance(ctx.author)} coins the game costs 500{Emojis.currency_emoji}\n use "skip" to go for a higher bet and "stop" to secure the bag. **anything else would be taken as "skip"**',color=Colors.yellow)
         embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
         embed.set_thumbnail(url=ImageUrls.bag_url)
         embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
