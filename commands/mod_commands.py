@@ -476,7 +476,7 @@ class ban(commands.Cog):
             try:
                 await asyncio.sleep(self.muted_people[member.id])
             except Exception as E:
-                raise E
+                raise E from E
             await member.remove_roles(muted_role)
 
     @commands.command(aliases=["ava", "av"])
