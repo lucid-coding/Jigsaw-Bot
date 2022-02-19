@@ -299,7 +299,7 @@ class Economy(commands.Cog):
             await ctx.send(embed=embed)
             await User.remove_balance(ctx.author,number)
     
-    @commands.cooldown(1,10,commands.BucketType.user)
+    @commands.cooldown(1,30,commands.BucketType.user)
     @commands.command()
     async def pull(self,ctx) -> Optional[Coroutine]:
         """
@@ -355,14 +355,21 @@ class Economy(commands.Cog):
                         await ctx.send(embed=embed)
                         continue
 
-
-                    self.active_players.remove(ctx.author.id)
-                    await User.add_balance(ctx.author,amount)
-                    embed = discord.Embed(description=f'{ctx.author.name} you have stopped the game you won {amount}{Emojis.currency_emoji}',color=Colors.yellow)
-                    embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
-                    embed.set_thumbnail(url=ImageUrls.bag_url)
-                    embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
-                    return await ctx.send(embed=embed)
+                    if amount == 500:
+                        embed = discord.Embed(title=f'{random.choice(Replies.error_replies)} {random.choice(Emojis.pepe_sad_emojis)}', description="you just started, you can't end it right now")
+                        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
+                        embed.set_thumbnail(url=ImageUrls.error_url)
+                        embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
+                        await ctx.send(embed=embed)
+                        continue
+                    else:
+                        self.active_players.remove(ctx.author.id)
+                        await User.add_balance(ctx.author,amount)
+                        embed = discord.Embed(description=f'{ctx.author.name} you have stopped the game you won {amount}{Emojis.currency_emoji}',color=Colors.yellow)
+                        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
+                        embed.set_thumbnail(url=ImageUrls.bag_url)
+                        embed.set_footer(text=f"{ctx.author.name}'s skip command", icon_url=ctx.author.avatar.url)
+                        return await ctx.send(embed=embed)
                 if not random.randrange(0,3) and bet.content.lower() != 'stop':
                     self.active_players.remove(ctx.author.id)
                 else:
