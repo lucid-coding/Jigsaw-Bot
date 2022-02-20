@@ -30,7 +30,7 @@ class Economy(commands.Cog):
         Arguments -> None
         """
         hint = None
-        number = random.randint(1,100,10)
+        number = random.randint(1,100)
         if number > 30 and number < 90:
             hint = random.randrange(number-30,number+10)
         elif hint is None:
